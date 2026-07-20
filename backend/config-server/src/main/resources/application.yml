@@ -10,8 +10,6 @@ spring:
       server:
         git:
           uri: https://github.com/Rishabhmeena23/ecommerce-config.git
-          username: Rishabhmeena23
-          password: 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
           default-label: main
 
 management:
