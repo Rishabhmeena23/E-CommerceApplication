@@ -1,0 +1,22 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: admin-service
+
+  config:
+    import: "optional:configserver:"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+services:
+  auth:
+    url: http://auth-service
+  product:
+    url: http://product-service
+  order:
+    url: http://order-service
