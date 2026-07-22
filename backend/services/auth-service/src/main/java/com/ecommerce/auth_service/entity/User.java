@@ -7,10 +7,10 @@ import lombok.*;
 
 @Entity
 @Table(
-    name = "users",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-    }
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email")
+        }
 )
 @Getter
 @Setter
@@ -23,10 +23,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false,length = 100)
     private String name;
 
-    @Column(nullable = false, length = 150)
+    @Column(nullable = false,unique = true,length = 150)
     private String email;
 
     @Column(nullable = false)
@@ -44,13 +44,14 @@ public class User {
     private LocalDateTime updatedAt;
 
     @PrePersist
-    public void prePersist() {
+    public void onCreate(){
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
-    public void preUpdate() {
+    public void onUpdate(){
         updatedAt = LocalDateTime.now();
     }
+
 }
