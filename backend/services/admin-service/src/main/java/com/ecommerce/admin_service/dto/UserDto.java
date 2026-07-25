@@ -1,26 +1,36 @@
 package com.ecommerce.admin_service.dto;
 
+import java.time.LocalDateTime;
 
 public class UserDto {
 
     private Long id;
-    private String firstName;
-    private String lastName;
+
+    private String name;
+
     private String email;
+
     private String role;
-    private String status;
+
+    private Boolean active;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 
     public UserDto() {
     }
 
-    public UserDto(Long id, String firstName, String lastName,
-                   String email, String role, String status) {
+    public UserDto(Long id, String name, String email, String role,
+                   Boolean active, LocalDateTime createdAt,
+                   LocalDateTime updatedAt) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.email = email;
         this.role = role;
-        this.status = status;
+        this.active = active;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -31,20 +41,12 @@ public class UserDto {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -63,11 +65,27 @@ public class UserDto {
         this.role = role;
     }
 
-    public String getStatus() {
-        return status;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

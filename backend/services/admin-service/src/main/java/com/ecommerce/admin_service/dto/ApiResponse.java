@@ -1,9 +1,9 @@
 package com.ecommerce.admin_service.dto;
 
-
 public class ApiResponse {
 
     private boolean success;
+
     private String message;
 
     public ApiResponse() {

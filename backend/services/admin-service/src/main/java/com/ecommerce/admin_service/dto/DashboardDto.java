@@ -1,55 +1,57 @@
 package com.ecommerce.admin_service.dto;
 
-
 public class DashboardDto {
 
-    private long totalUsers;
-    private long totalProducts;
-    private long totalOrders;
-    private long pendingDisputes;
+    private Long totalUsers;
+
+    private Long totalProducts;
+
+    private Long totalOrders;
+
+    private Long pendingDisputes;
 
     public DashboardDto() {
     }
 
-    public DashboardDto(long totalUsers,
-                        long totalProducts,
-                        long totalOrders,
-                        long pendingDisputes) {
+    public DashboardDto(Long totalUsers,
+                        Long totalProducts,
+                        Long totalOrders,
+                        Long pendingDisputes) {
         this.totalUsers = totalUsers;
         this.totalProducts = totalProducts;
         this.totalOrders = totalOrders;
         this.pendingDisputes = pendingDisputes;
     }
 
-    public long getTotalUsers() {
+    public Long getTotalUsers() {
         return totalUsers;
     }
 
-    public void setTotalUsers(long totalUsers) {
+    public void setTotalUsers(Long totalUsers) {
         this.totalUsers = totalUsers;
     }
 
-    public long getTotalProducts() {
+    public Long getTotalProducts() {
         return totalProducts;
     }
 
-    public void setTotalProducts(long totalProducts) {
+    public void setTotalProducts(Long totalProducts) {
         this.totalProducts = totalProducts;
     }
 
-    public long getTotalOrders() {
+    public Long getTotalOrders() {
         return totalOrders;
     }
 
-    public void setTotalOrders(long totalOrders) {
+    public void setTotalOrders(Long totalOrders) {
         this.totalOrders = totalOrders;
     }
 
-    public long getPendingDisputes() {
+    public Long getPendingDisputes() {
         return pendingDisputes;
     }
 
-    public void setPendingDisputes(long pendingDisputes) {
+    public void setPendingDisputes(Long pendingDisputes) {
         this.pendingDisputes = pendingDisputes;
     }
 }

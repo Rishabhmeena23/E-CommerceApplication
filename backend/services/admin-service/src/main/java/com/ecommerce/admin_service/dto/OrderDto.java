@@ -1,20 +1,23 @@
 package com.ecommerce.admin_service.dto;
 
-
 import java.math.BigDecimal;
 
 public class OrderDto {
 
     private Long id;
+
     private Long userId;
+
     private BigDecimal totalAmount;
+
     private String orderStatus;
 
     public OrderDto() {
     }
 
     public OrderDto(Long id, Long userId,
-                    BigDecimal totalAmount, String orderStatus) {
+                    BigDecimal totalAmount,
+                    String orderStatus) {
         this.id = id;
         this.userId = userId;
         this.totalAmount = totalAmount;
