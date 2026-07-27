@@ -35,6 +35,15 @@
         <module name="cart-service" />
         <module name="auth-service" />
       </profile>
+      <profile name="Annotation profile for seller-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+        </processorPath>
+        <module name="seller-service" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
@@ -47,6 +56,7 @@
       <module name="customer-service" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="productservicedatabase" options="-parameters" />
+      <module name="seller-service" options="-parameters" />
       <module name="wishlist-service" options="-parameters" />
     </option>
   </component>

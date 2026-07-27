@@ -5,14 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="826405b3-bff2-4383-9b55-45e94be22195" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/SellerServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/controller/SellerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/dto/request/CreateSellerRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/dto/request/UpdateSellerRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/dto/request/UpdateSellerStatusRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/dto/response/SellerResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/entity/Seller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/entity/enums/ApprovalStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/entity/enums/SellerType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/exception/ResourceAlreadyExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/exception/ResourceNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/repository/SellerRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/service/SellerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/service/impl/SellerServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/resources/application.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/test/java/com/ecommerce/seller/SellerServiceApplicationTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/cart-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/cart-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/cart-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/cart-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/customer-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/customer-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/product-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/product-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/wishlist-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/wishlist-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/wishlist-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/wishlist-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/product-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/product-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/seller/HELP.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,23 +74,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000015492484977" />
-      <entry key="MS500" value="1.0688690697422882" />
-      <entry key="S2" value="1.5122784116250054" />
-      <entry key="S5" value="1.7654029117048713" />
-      <entry key="S10" value="1.8923235679775683" />
-      <entry key="S30" value="2.368604777616661" />
-      <entry key="S60" value="2.888616105265058" />
-      <entry key="M2" value="3.694708481991929" />
-      <entry key="M5" value="11.52417928615142" />
-      <entry key="M10" value="27.001857204821608" />
-      <entry key="M15" value="37.865373358320355" />
-      <entry key="M30" value="58.82519625711184" />
-      <entry key="H1" value="84.82124293918248" />
-      <entry key="H2" value="110.3165361370363" />
-      <entry key="H4" value="129.12644965888285" />
-      <entry key="D1" value="149.34721748309707" />
-      <entry key="W1" value="153.32158666938867" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.000461317081308" />
+      <entry key="S2" value="1.167344638907636" />
+      <entry key="S5" value="1.9196128345399852" />
+      <entry key="S10" value="3.235502497219656" />
+      <entry key="S30" value="7.058362078315767" />
+      <entry key="S60" value="9.649664893935435" />
+      <entry key="M2" value="11.583351092671462" />
+      <entry key="M5" value="14.110709709995714" />
+      <entry key="M10" value="21.508592175446086" />
+      <entry key="M15" value="30.442947036306013" />
+      <entry key="M30" value="53.04789071445393" />
+      <entry key="H1" value="83.35909214753735" />
+      <entry key="H2" value="114.07634941025724" />
+      <entry key="H4" value="137.38254605272584" />
+      <entry key="D1" value="163.0196663249561" />
+      <entry key="W1" value="168.12618333336152" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -93,23 +112,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.8179033345049274" />
-      <entry key="MS500" value="1.0268419129158066" />
-      <entry key="S2" value="1.4973309781160928" />
-      <entry key="S5" value="1.758425480231813" />
-      <entry key="S10" value="1.888584992020481" />
-      <entry key="S30" value="2.367045848812816" />
-      <entry key="S60" value="2.887666095619113" />
-      <entry key="M2" value="3.6941388591039237" />
-      <entry key="M5" value="11.523739087093398" />
-      <entry key="M10" value="27.001415059458296" />
-      <entry key="M15" value="37.86488578770367" />
-      <entry key="M30" value="58.82418987272021" />
-      <entry key="H1" value="84.81967136286495" />
-      <entry key="H2" value="110.31506796823172" />
-      <entry key="H4" value="129.12543834311617" />
-      <entry key="D1" value="149.34699672189276" />
-      <entry key="W1" value="153.32155363179766" />
+      <entry key="MS100" value="9.032123629704391E-13" />
+      <entry key="MS500" value="0.003901357623951072" />
+      <entry key="S2" value="0.2943675649554171" />
+      <entry key="S5" value="1.2174323757925702" />
+      <entry key="S10" value="2.6823608539821913" />
+      <entry key="S30" value="6.694080070996412" />
+      <entry key="S60" value="9.401778706151696" />
+      <entry key="M2" value="11.434180661600807" />
+      <entry key="M5" value="14.043274148849793" />
+      <entry key="M10" value="21.473304751456986" />
+      <entry key="M15" value="30.41895635950974" />
+      <entry key="M30" value="53.035168244272896" />
+      <entry key="H1" value="83.35174525109149" />
+      <entry key="H2" value="114.07198000964615" />
+      <entry key="H4" value="137.38005961096476" />
+      <entry key="D1" value="163.01919253137874" />
+      <entry key="W1" value="168.12611390199731" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -143,6 +162,8 @@
     "Spring Boot.CartServiceApplication.executor": "Run",
     "Spring Boot.ConfigServerApplication.executor": "Run",
     "Spring Boot.CustomerServiceApplication.executor": "Run",
+    "Spring Boot.Product_Service_Application.executor": "Run",
+    "Spring Boot.SellerServiceApplication.executor": "Run",
     "Spring Boot.WishlistServiceApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
@@ -187,13 +208,15 @@
               <entry key="AuthServiceApplication" value="FAILED" />
               <entry key="CartServiceApplication" value="STOPPED" />
               <entry key="CustomerServiceApplication" value="STOPPED" />
+              <entry key="Product_Service_Application" value="FAILED" />
+              <entry key="WishlistServiceApplication" value="STOPPED" />
             </map>
           </value>
         </entry>
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Product_Service_Application">
+  <component name="RunManager" selected="Spring Boot.SellerServiceApplication">
     <configuration name="AdminServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ecommerce.admin_service.AdminServiceApplication" />
       <module name="admin-service" />
@@ -308,6 +331,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SellerServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="seller-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ecommerce.seller.SellerServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WishlistServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="wishlist-service" />
@@ -345,7 +376,7 @@
       <workItem from="1785148490341" duration="833000" />
       <workItem from="1785152252303" duration="1499000" />
       <workItem from="1785158354250" duration="152000" />
-      <workItem from="1785158547072" duration="7268000" />
+      <workItem from="1785158547072" duration="8368000" />
     </task>
     <servers />
   </component>
