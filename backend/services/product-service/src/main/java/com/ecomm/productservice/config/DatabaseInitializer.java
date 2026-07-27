@@ -4,29 +4,30 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
-public class DatabaseInitializer {
+public class DatabaseInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
+    @Override
+    public void initialize(ConfigurableApplicationContext applicationContext) {
+        Environment env = applicationContext.getEnvironment();
+        String dbUrl = env.getProperty("spring.datasource.url");
+        String dbUsername = env.getProperty("spring.datasource.username");
+        String dbPassword = env.getProperty("spring.datasource.password");
 
-    @Value("${spring.datasource.username}")
-    private String dbUsername;
+        if (dbUrl != null) {
+            initializeDatabase(dbUrl, dbUsername, dbPassword);
+        }
+    }
 
-    @Value("${spring.datasource.password}")
-    private String dbPassword;
-
-    @PostConstruct
-    public void initializeDatabase() {
+    public static void initializeDatabase(String dbUrl, String dbUsername, String dbPassword) {
         try {
-            // Extract database name and root connection URL
             String[] urlParts = dbUrl.split("/");
             String databaseName = urlParts[urlParts.length - 1].split("\\?")[0];
             String rootUrl = String.join("/", java.util.Arrays.copyOf(urlParts, urlParts.length - 1));

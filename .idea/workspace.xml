@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="826405b3-bff2-4383-9b55-45e94be22195" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/discovery-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/discovery-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/auth-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/auth-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/customer-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/customer-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/auth-service/src/main/java/com/ecommerce/auth_service/AuthServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/auth-service/src/main/java/com/ecommerce/auth_service/AuthServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/auth-service/src/main/java/com/ecommerce/auth_service/config/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/auth-service/src/main/java/com/ecommerce/auth_service/config/DatabaseInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/cart-service/src/main/java/com/ecommerce/cart_service/config/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/cart-service/src/main/java/com/ecommerce/cart_service/config/DatabaseInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/customer-service/src/main/java/com/ecommerce/customer_service/CustomerServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/customer-service/src/main/java/com/ecommerce/customer_service/CustomerServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/customer-service/src/main/java/com/ecommerce/customer_service/config/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/customer-service/src/main/java/com/ecommerce/customer_service/config/DatabaseInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/product-service/src/main/java/com/ecomm/productservice/config/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/product-service/src/main/java/com/ecomm/productservice/config/DatabaseInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/wishlist-service/src/main/java/com/ecommerce/wishlist_service/config/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/wishlist-service/src/main/java/com/ecommerce/wishlist_service/config/DatabaseInitializer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,6 +142,7 @@
     "Spring Boot.AuthServiceApplication.executor": "Run",
     "Spring Boot.CartServiceApplication.executor": "Run",
     "Spring Boot.ConfigServerApplication.executor": "Run",
+    "Spring Boot.CustomerServiceApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
@@ -183,6 +185,7 @@
             <map>
               <entry key="AuthServiceApplication" value="FAILED" />
               <entry key="CartServiceApplication" value="FAILED" />
+              <entry key="CustomerServiceApplication" value="STOPPED" />
             </map>
           </value>
         </entry>
@@ -341,7 +344,7 @@
       <workItem from="1785148490341" duration="833000" />
       <workItem from="1785152252303" duration="1499000" />
       <workItem from="1785158354250" duration="152000" />
-      <workItem from="1785158547072" duration="5014000" />
+      <workItem from="1785158547072" duration="5915000" />
     </task>
     <servers />
   </component>
