@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="826405b3-bff2-4383-9b55-45e94be22195" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/services/seller-service/src/test/java/com/ecommerce/seller/controller/SellerController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/seller-service/src/test/java/com/ecommerce/seller/dto/request/CreateSellerRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/seller-service/src/test/java/com/ecommerce/seller/dto/request/UpdateSellerRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/seller-service/src/test/java/com/ecommerce/seller/dto/response/SellerResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/seller-service/src/test/java/com/ecommerce/seller/entity/Seller.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/seller-service/src/test/java/com/ecommerce/seller/service/impl/SellerServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/seller-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/seller-service/application.yaml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,23 +49,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.8988702071728016" />
-      <entry key="MS500" value="3.3163642344932254" />
-      <entry key="S2" value="7.083873831895642" />
-      <entry key="S5" value="11.730709394020268" />
-      <entry key="S10" value="14.70197522855508" />
-      <entry key="S30" value="18.229896201440834" />
-      <entry key="S60" value="23.619558310845783" />
-      <entry key="M2" value="33.327276652780256" />
-      <entry key="M5" value="54.03162390184804" />
-      <entry key="M10" value="75.90946203045361" />
-      <entry key="M15" value="91.46093545637692" />
-      <entry key="M30" value="123.57725898687433" />
-      <entry key="H1" value="161.90580968142092" />
-      <entry key="H2" value="199.48507407881664" />
-      <entry key="H4" value="227.99738349836403" />
-      <entry key="D1" value="259.588041301662" />
-      <entry key="W1" value="265.91593252990646" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000000000000149" />
+      <entry key="S2" value="1.000531659816349" />
+      <entry key="S5" value="1.07354441849835" />
+      <entry key="S10" value="1.3828754306264806" />
+      <entry key="S30" value="2.220797230672418" />
+      <entry key="S60" value="3.9664620630955087" />
+      <entry key="M2" value="10.995548276680944" />
+      <entry key="M5" value="33.808173336950155" />
+      <entry key="M10" value="60.365182994286315" />
+      <entry key="M15" value="78.89327461007007" />
+      <entry key="M30" value="115.57864476659664" />
+      <entry key="H1" value="157.53636267205403" />
+      <entry key="H2" value="197.89342591480445" />
+      <entry key="H4" value="228.3585002789621" />
+      <entry key="D1" value="262.0849130632276" />
+      <entry key="W1" value="268.84224517361974" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -91,23 +87,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.7840077742996217" />
-      <entry key="MS500" value="3.2748206810817937" />
-      <entry key="S2" value="7.061806200344204" />
-      <entry key="S5" value="11.716055855726479" />
-      <entry key="S10" value="14.692754468677936" />
-      <entry key="S30" value="18.226070093624994" />
-      <entry key="S60" value="23.617068920069638" />
-      <entry key="M2" value="33.324607598909964" />
-      <entry key="M5" value="54.02170220335994" />
-      <entry key="M10" value="75.89597361805652" />
-      <entry key="M15" value="91.44821371833399" />
-      <entry key="M30" value="123.56788514752483" />
-      <entry key="H1" value="161.89944236729792" />
-      <entry key="H2" value="199.48097367966182" />
-      <entry key="H4" value="227.99495637063185" />
-      <entry key="D1" value="259.5875634143341" />
-      <entry key="W1" value="265.91586210436157" />
+      <entry key="MS100" value="0.8766057213160351" />
+      <entry key="MS500" value="0.9740042685432555" />
+      <entry key="S2" value="0.9939642252104861" />
+      <entry key="S5" value="1.0706809826419854" />
+      <entry key="S10" value="1.380950952040103" />
+      <entry key="S30" value="2.219732309881432" />
+      <entry key="S60" value="3.965686814384456" />
+      <entry key="M2" value="10.994546153276751" />
+      <entry key="M5" value="33.80235192995163" />
+      <entry key="M10" value="60.35490641949238" />
+      <entry key="M15" value="78.88266377005574" />
+      <entry key="M30" value="115.57007896078338" />
+      <entry key="H1" value="157.5302723430063" />
+      <entry key="H2" value="197.88941355482663" />
+      <entry key="H4" value="228.35609809255357" />
+      <entry key="D1" value="262.084435580032" />
+      <entry key="W1" value="268.84217469308226" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -189,6 +185,7 @@
               <entry key="CartServiceApplication" value="STOPPED" />
               <entry key="CustomerServiceApplication" value="STOPPED" />
               <entry key="Product_Service_Application" value="FAILED" />
+              <entry key="SellerServiceApplication" value="STOPPED" />
               <entry key="WishlistServiceApplication" value="STOPPED" />
             </map>
           </value>
@@ -356,7 +353,7 @@
       <workItem from="1785148490341" duration="833000" />
       <workItem from="1785152252303" duration="1499000" />
       <workItem from="1785158354250" duration="152000" />
-      <workItem from="1785158547072" duration="8983000" />
+      <workItem from="1785158547072" duration="9458000" />
     </task>
     <servers />
   </component>
