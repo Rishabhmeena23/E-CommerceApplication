@@ -4,35 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="826405b3-bff2-4383-9b55-45e94be22195" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/SellerServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/controller/SellerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/dto/request/CreateSellerRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/dto/request/UpdateSellerRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/dto/request/UpdateSellerStatusRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/dto/response/SellerResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/entity/Seller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/entity/enums/ApprovalStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/entity/enums/SellerType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/exception/ResourceAlreadyExistsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/exception/ResourceNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/repository/SellerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/service/SellerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/java/com/ecommerce/seller/service/impl/SellerServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/main/resources/application.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/services/seller-service/src/test/java/com/ecommerce/seller/SellerServiceApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/product-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/product-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/seller/HELP.md" beforeDir="false" />
-    </list>
+    <list default="true" id="826405b3-bff2-4383-9b55-45e94be22195" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,23 +46,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.000461317081308" />
-      <entry key="S2" value="1.167344638907636" />
-      <entry key="S5" value="1.9196128345399852" />
-      <entry key="S10" value="3.235502497219656" />
-      <entry key="S30" value="7.058362078315767" />
-      <entry key="S60" value="9.649664893935435" />
-      <entry key="M2" value="11.583351092671462" />
-      <entry key="M5" value="14.110709709995714" />
-      <entry key="M10" value="21.508592175446086" />
-      <entry key="M15" value="30.442947036306013" />
-      <entry key="M30" value="53.04789071445393" />
-      <entry key="H1" value="83.35909214753735" />
-      <entry key="H2" value="114.07634941025724" />
-      <entry key="H4" value="137.38254605272584" />
-      <entry key="D1" value="163.0196663249561" />
-      <entry key="W1" value="168.12618333336152" />
+      <entry key="MS100" value="1.3407829855960056" />
+      <entry key="MS500" value="3.4759214967271777" />
+      <entry key="S2" value="8.814196188047237" />
+      <entry key="S5" value="17.156748818236032" />
+      <entry key="S10" value="25.551563513418103" />
+      <entry key="S30" value="36.11159711333226" />
+      <entry key="S60" value="40.54912518900117" />
+      <entry key="M2" value="45.141023144020174" />
+      <entry key="M5" value="51.686033365972136" />
+      <entry key="M10" value="60.32544264553045" />
+      <entry key="M15" value="69.49538700980719" />
+      <entry key="M30" value="92.68229054167878" />
+      <entry key="H1" value="123.90396741484115" />
+      <entry key="H2" value="155.70229224225486" />
+      <entry key="H4" value="179.94961668585216" />
+      <entry key="D1" value="206.73566360793336" />
+      <entry key="W1" value="212.08432424985446" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -112,23 +84,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="9.032123629704391E-13" />
-      <entry key="MS500" value="0.003901357623951072" />
-      <entry key="S2" value="0.2943675649554171" />
-      <entry key="S5" value="1.2174323757925702" />
-      <entry key="S10" value="2.6823608539821913" />
-      <entry key="S30" value="6.694080070996412" />
-      <entry key="S60" value="9.401778706151696" />
-      <entry key="M2" value="11.434180661600807" />
-      <entry key="M5" value="14.043274148849793" />
-      <entry key="M10" value="21.473304751456986" />
-      <entry key="M15" value="30.41895635950974" />
-      <entry key="M30" value="53.035168244272896" />
-      <entry key="H1" value="83.35174525109149" />
-      <entry key="H2" value="114.07198000964615" />
-      <entry key="H4" value="137.38005961096476" />
-      <entry key="D1" value="163.01919253137874" />
-      <entry key="W1" value="168.12611390199731" />
+      <entry key="MS100" value="1.245913447936571" />
+      <entry key="MS500" value="3.431662693828283" />
+      <entry key="S2" value="8.787155459678553" />
+      <entry key="S5" value="17.134925484234877" />
+      <entry key="S10" value="25.53476016255643" />
+      <entry key="S30" value="36.1008968408559" />
+      <entry key="S60" value="40.52388582544555" />
+      <entry key="M2" value="45.095517628401666" />
+      <entry key="M5" value="51.64399859680241" />
+      <entry key="M10" value="60.29741186495292" />
+      <entry key="M15" value="69.47472040642712" />
+      <entry key="M30" value="92.67041015553276" />
+      <entry key="H1" value="123.89683395612923" />
+      <entry key="H2" value="155.6979700908505" />
+      <entry key="H4" value="179.94713471175683" />
+      <entry key="D1" value="206.73518710891557" />
+      <entry key="W1" value="212.0842543324673" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -171,6 +143,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/Admin/IdeaProjects/E-CommerceApplication/backend/services/seller-service/src/test/java",
     "last_opened_file_path": "C:/Users/Admin/IdeaProjects/E-CommerceApplication/backend/services",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -376,7 +349,7 @@
       <workItem from="1785148490341" duration="833000" />
       <workItem from="1785152252303" duration="1499000" />
       <workItem from="1785158354250" duration="152000" />
-      <workItem from="1785158547072" duration="8368000" />
+      <workItem from="1785158547072" duration="8983000" />
     </task>
     <servers />
   </component>
