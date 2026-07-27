@@ -17,19 +17,18 @@ public class MockOrderServiceClient implements OrderServiceClient {
         return List.of(
 
                 new OrderDto(
-                        101L,
                         1L,
-                        new BigDecimal("56000"),
-                        "DELIVERED"),
+                        1L,
+                        new BigDecimal("75000"),
+                        "PLACED"
+                ),
 
                 new OrderDto(
-                        102L,
                         2L,
-                        new BigDecimal("1200"),
-                        "PENDING")
-
+                        1L,
+                        new BigDecimal("30000"),
+                        "DELIVERED"
+                )
         );
-
     }
-
 }

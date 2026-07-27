@@ -2,10 +2,14 @@ package com.ecommerce.admin_service.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.admin_service.dto.ApiResponse;
 import com.ecommerce.admin_service.dto.BanUserRequest;
@@ -55,7 +59,7 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getUserById(id));
     }
 
-    @PutMapping("/users/{id}/ban")
+    @PatchMapping("/users/{id}/ban")
     public ResponseEntity<ApiResponse> banUser(
             @PathVariable Long id,
             @Valid @RequestBody BanUserRequest request) {
@@ -66,7 +70,7 @@ public class AdminController {
                 new ApiResponse(true, "User banned successfully"));
     }
 
-    @PutMapping("/users/{id}/unban")
+    @PatchMapping("/users/{id}/unban")
     public ResponseEntity<ApiResponse> unbanUser(
             @PathVariable Long id) {
 
@@ -76,7 +80,7 @@ public class AdminController {
                 new ApiResponse(true, "User unbanned successfully"));
     }
 
-    @PutMapping("/users/{id}/role")
+    @PatchMapping("/users/{id}/role")
     public ResponseEntity<ApiResponse> assignRole(
             @PathVariable Long id,
             @Valid @RequestBody RoleRequest request) {
@@ -98,5 +102,4 @@ public class AdminController {
 
         return ResponseEntity.ok(adminService.getAllOrders());
     }
-
 }

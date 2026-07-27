@@ -1,15 +1,13 @@
-package com.ecommerce.auth_service.config;
+package com.ecommerce.api_gateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.ecommerce.auth_service.security.JwtAuthenticationFilter;
+import com.ecommerce.api_gateway.security.JwtAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
@@ -19,11 +17,6 @@ public class SecurityConfig {
     public SecurityConfig(
             JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -41,10 +34,13 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // Registration and login must remain public
+                        // Public authentication endpoints
                         .requestMatchers("/auth/**").permitAll()
 
-                        // User management is ADMIN only
+                        // Admin Service endpoints
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        // Auth user-management endpoints
                         .requestMatchers("/users/**").hasRole("ADMIN")
 
                         // Everything else requires authentication

@@ -9,6 +9,7 @@ import com.ecommerce.auth_service.dto.RegisterRequest;
 import com.ecommerce.auth_service.entity.Role;
 import com.ecommerce.auth_service.entity.User;
 import com.ecommerce.auth_service.repository.UserRepository;
+import com.ecommerce.auth_service.security.JwtService;
 import com.ecommerce.auth_service.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,12 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Override
     public AuthResponse register(RegisterRequest request) {
 
-        if(userRepository.existsByEmail(request.getEmail())){
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
 
@@ -51,20 +53,29 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+                .orElseThrow(() ->
+                        new RuntimeException("Invalid email or password"));
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(
+                request.getPassword(),
+                user.getPassword())) {
+
             throw new RuntimeException("Invalid email or password");
         }
 
+        if (!Boolean.TRUE.equals(user.getActive())) {
+            throw new RuntimeException("User account is disabled");
+        }
+
+        String token = jwtService.generateToken(user);
+
         return AuthResponse.builder()
                 .message("Login Successful")
-                .token(null)   // JWT will be added later
+                .token(token)
                 .userId(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .role(user.getRole().name())
                 .build();
     }
-
 }

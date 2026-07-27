@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,6 +16,7 @@
     <groupId>com.ecommerce</groupId>
     <artifactId>admin-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
     <name>admin-service</name>
     <description>Admin Service for E-Commerce Microservices</description>
 
@@ -25,33 +27,78 @@
 
     <dependencies>
 
-        <!-- REST API -->
+        <!-- ===================================================== -->
+        <!-- WEB / REST API                                        -->
+        <!-- ===================================================== -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- WebClient -->
+
+        <!-- ===================================================== -->
+        <!-- WEBCLIENT                                             -->
+        <!-- Used for Admin -> Auth/Product/Order communication    -->
+        <!-- ===================================================== -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
-        <!-- Validation -->
+
+        <!-- ===================================================== -->
+        <!-- VALIDATION                                            -->
+        <!-- ===================================================== -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- Spring Security -->
+
+        <!-- ===================================================== -->
+        <!-- SPRING SECURITY                                       -->
+        <!-- ===================================================== -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- ========================================================= -->
-        <!-- DATABASE (Disabled for now - Admin Service uses mock data) -->
-        <!-- Uncomment when Admin Service needs its own database -->
+
+        <!-- ===================================================== -->
+        <!-- JWT                                                   -->
+        <!-- Same version as Auth Service and API Gateway          -->
+        <!-- ===================================================== -->
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.12.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.12.7</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.12.7</version>
+            <scope>runtime</scope>
+        </dependency>
+
+
+        <!-- ===================================================== -->
+        <!-- DATABASE                                              -->
+        <!-- Currently disabled because Admin has no own database  -->
+        <!-- ===================================================== -->
+
         <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -64,21 +111,32 @@
             <scope>runtime</scope>
         </dependency>
         -->
-        <!-- ========================================================= -->
 
-        <!-- Spring Cloud Config -->
+
+        <!-- ===================================================== -->
+        <!-- SPRING CLOUD CONFIG                                   -->
+        <!-- ===================================================== -->
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
 
-        <!-- Eureka Client -->
+
+        <!-- ===================================================== -->
+        <!-- EUREKA CLIENT                                         -->
+        <!-- ===================================================== -->
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
-        <!-- Development -->
+
+        <!-- ===================================================== -->
+        <!-- DEVELOPMENT                                           -->
+        <!-- ===================================================== -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -86,7 +144,11 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Testing -->
+
+        <!-- ===================================================== -->
+        <!-- TESTING                                               -->
+        <!-- ===================================================== -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -101,8 +163,15 @@
 
     </dependencies>
 
+
+    <!-- ========================================================= -->
+    <!-- SPRING CLOUD DEPENDENCY MANAGEMENT                        -->
+    <!-- ========================================================= -->
+
     <dependencyManagement>
+
         <dependencies>
+
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -110,16 +179,27 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
         </dependencies>
+
     </dependencyManagement>
 
+
+    <!-- ========================================================= -->
+    <!-- BUILD                                                     -->
+    <!-- ========================================================= -->
+
     <build>
+
         <plugins>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
         </plugins>
+
     </build>
 
 </project>

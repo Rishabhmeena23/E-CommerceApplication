@@ -19,21 +19,20 @@ public class MockProductServiceClient implements ProductServiceClient {
                 new ProductDto(
                         1L,
                         "Laptop",
+                        "Gaming Laptop",
                         "Electronics",
-                        new BigDecimal("55000"),
-                        15,
-                        "AVAILABLE"),
+                        new BigDecimal("75000"),
+                        "AVAILABLE"
+                ),
 
                 new ProductDto(
                         2L,
-                        "Keyboard",
-                        "Accessories",
-                        new BigDecimal("1200"),
-                        40,
-                        "AVAILABLE")
-
+                        "Smartphone",
+                        "Android Smartphone",
+                        "Electronics",
+                        new BigDecimal("30000"),
+                        "AVAILABLE"
+                )
         );
-
     }
-
 }
