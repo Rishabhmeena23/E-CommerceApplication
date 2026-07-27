@@ -1,15 +1,6 @@
-server:
-  port: 8081
-
 spring:
   application:
     name: customer-service
-
-  datasource:
-    url: jdbc:mysql://localhost:3306/ecommerce_customer
-    username: root
-    password: Shrikant@712002
-    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:

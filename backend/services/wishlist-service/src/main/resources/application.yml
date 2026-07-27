@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8092
 
 spring:
   application:
@@ -7,8 +7,8 @@ spring:
 
   datasource:
     url: jdbc:mysql://localhost:3306/ecommerce_wishlist
-    username: root
-    password: Shrikant@712002
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
