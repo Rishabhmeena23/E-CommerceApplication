@@ -1,5 +1,5 @@
 <DataSourcesHistory>
-  <DataSourceFromHistory isRemovedFromProject="true">
+  <DataSourceFromHistory isRemovedFromProject="false">
     <data-source source="LOCAL" name="ecommerce_customer@localhost" uuid="a5c46ee8-1d14-4649-9760-da133d9b47d8">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
       <driver-ref>mysql.8</driver-ref>
@@ -13,7 +13,7 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </DataSourceFromHistory>
-  <DataSourceFromHistory isRemovedFromProject="true">
+  <DataSourceFromHistory isRemovedFromProject="false">
     <data-source source="LOCAL" name="ecommerce_cart@localhost" uuid="8f6c5ca1-3397-4d02-91f0-f95f8316f340">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
       <driver-ref>mysql.8</driver-ref>
@@ -27,7 +27,7 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </DataSourceFromHistory>
-  <DataSourceFromHistory isRemovedFromProject="true">
+  <DataSourceFromHistory isRemovedFromProject="false">
     <data-source source="LOCAL" name="ecommerce_wishlist@localhost" uuid="c4da54c0-d786-44b2-9cec-3d3ccf5e458d">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
       <driver-ref>mysql.8</driver-ref>
@@ -41,7 +41,7 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </DataSourceFromHistory>
-  <DataSourceFromHistory isRemovedFromProject="true">
+  <DataSourceFromHistory isRemovedFromProject="false">
     <data-source source="LOCAL" name="ecommerce_auth@localhost" uuid="6696e173-c5f7-412c-a829-c8a7fc7d7173">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
       <driver-ref>mysql.8</driver-ref>

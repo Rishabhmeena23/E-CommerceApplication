@@ -6,7 +6,7 @@ spring:
     name: wishlist-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/ecommerce_wishlist
+    url: jdbc:mysql://localhost:3306/ecommerce_wishlist?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: Shrikant@712002
     driver-class-name: com.mysql.cj.jdbc.Driver
