@@ -9,6 +9,7 @@
     <file url="file://$PROJECT_DIR$/backend/services/cart-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/services/customer-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/services/product-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/services/seller-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/services/wishlist-service/src/main/java" charset="UTF-8" />
   </component>
 </project>
