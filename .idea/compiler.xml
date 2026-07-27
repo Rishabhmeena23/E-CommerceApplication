@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
-        <module name="cart-service" />
         <module name="discovery-server" />
         <module name="api-gateway" />
         <module name="wishlist-service" />
@@ -25,7 +24,7 @@
         </processorPath>
         <module name="productservicedatabase" />
       </profile>
-      <profile name="Annotation profile for customer-service" enabled="true">
+      <profile name="Annotation profile for cart-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -33,6 +32,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
         <module name="customer-service" />
+        <module name="cart-service" />
         <module name="auth-service" />
       </profile>
     </annotationProcessing>
@@ -42,12 +42,12 @@
       <module name="admin-service" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
-      <module name="cart-service" options="" />
+      <module name="cart-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="productservicedatabase" options="-parameters" />
-      <module name="wishlist-service" options="" />
+      <module name="wishlist-service" options="-parameters" />
     </option>
   </component>
 </project>

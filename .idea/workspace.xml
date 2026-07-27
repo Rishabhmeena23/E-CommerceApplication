@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="826405b3-bff2-4383-9b55-45e94be22195" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/auth-service/src/main/java/com/ecommerce/auth_service/AuthServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/auth-service/src/main/java/com/ecommerce/auth_service/AuthServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/auth-service/src/main/java/com/ecommerce/auth_service/config/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/auth-service/src/main/java/com/ecommerce/auth_service/config/DatabaseInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/cart-service/src/main/java/com/ecommerce/cart_service/config/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/cart-service/src/main/java/com/ecommerce/cart_service/config/DatabaseInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/customer-service/src/main/java/com/ecommerce/customer_service/CustomerServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/customer-service/src/main/java/com/ecommerce/customer_service/CustomerServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/customer-service/src/main/java/com/ecommerce/customer_service/config/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/customer-service/src/main/java/com/ecommerce/customer_service/config/DatabaseInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/product-service/src/main/java/com/ecomm/productservice/config/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/product-service/src/main/java/com/ecomm/productservice/config/DatabaseInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/services/wishlist-service/src/main/java/com/ecommerce/wishlist_service/config/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/wishlist-service/src/main/java/com/ecommerce/wishlist_service/config/DatabaseInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/cart-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/cart-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/cart-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/cart-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/customer-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/customer-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/product-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/product-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/wishlist-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/wishlist-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/wishlist-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/wishlist-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,23 +55,23 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000000000005835" />
-      <entry key="MS500" value="1.0035746061254998" />
-      <entry key="S2" value="1.2445158683618347" />
-      <entry key="S5" value="1.5692759274683021" />
-      <entry key="S10" value="1.7545037623950606" />
-      <entry key="S30" value="1.9103753080565717" />
-      <entry key="S60" value="1.9541358960109254" />
-      <entry key="M2" value="1.976798802157971" />
-      <entry key="M5" value="1.9950487230060334" />
-      <entry key="M10" value="2.5772111073439836" />
-      <entry key="M15" value="4.970376879155628" />
-      <entry key="M30" value="17.21556486679041" />
-      <entry key="H1" value="36.44394695327945" />
-      <entry key="H2" value="53.830119600722725" />
-      <entry key="H4" value="65.58180442906847" />
-      <entry key="D1" value="77.38764776258198" />
-      <entry key="W1" value="79.62133291702354" />
+      <entry key="MS100" value="1.0000015492484977" />
+      <entry key="MS500" value="1.0688690697422882" />
+      <entry key="S2" value="1.5122784116250054" />
+      <entry key="S5" value="1.7654029117048713" />
+      <entry key="S10" value="1.8923235679775683" />
+      <entry key="S30" value="2.368604777616661" />
+      <entry key="S60" value="2.888616105265058" />
+      <entry key="M2" value="3.694708481991929" />
+      <entry key="M5" value="11.52417928615142" />
+      <entry key="M10" value="27.001857204821608" />
+      <entry key="M15" value="37.865373358320355" />
+      <entry key="M30" value="58.82519625711184" />
+      <entry key="H1" value="84.82124293918248" />
+      <entry key="H2" value="110.3165361370363" />
+      <entry key="H4" value="129.12644965888285" />
+      <entry key="D1" value="149.34721748309707" />
+      <entry key="W1" value="153.32158666938867" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -93,23 +93,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.8585654364382279" />
-      <entry key="MS500" value="0.9733909017386471" />
-      <entry key="S2" value="1.2343911314092528" />
-      <entry key="S5" value="1.5638680902781792" />
-      <entry key="S10" value="1.7514126843725715" />
-      <entry key="S30" value="1.9092363238584804" />
-      <entry key="S60" value="1.953551153331572" />
-      <entry key="M2" value="1.9765024815794126" />
-      <entry key="M5" value="1.9949274045325318" />
-      <entry key="M10" value="2.5769802735280822" />
-      <entry key="M15" value="4.969683038330646" />
-      <entry key="M30" value="17.213666677330135" />
-      <entry key="H1" value="36.4416851930274" />
-      <entry key="H2" value="53.82837103331281" />
-      <entry key="H4" value="65.58071702377156" />
-      <entry key="D1" value="77.38743037673339" />
-      <entry key="W1" value="79.62130087809999" />
+      <entry key="MS100" value="0.8179033345049274" />
+      <entry key="MS500" value="1.0268419129158066" />
+      <entry key="S2" value="1.4973309781160928" />
+      <entry key="S5" value="1.758425480231813" />
+      <entry key="S10" value="1.888584992020481" />
+      <entry key="S30" value="2.367045848812816" />
+      <entry key="S60" value="2.887666095619113" />
+      <entry key="M2" value="3.6941388591039237" />
+      <entry key="M5" value="11.523739087093398" />
+      <entry key="M10" value="27.001415059458296" />
+      <entry key="M15" value="37.86488578770367" />
+      <entry key="M30" value="58.82418987272021" />
+      <entry key="H1" value="84.81967136286495" />
+      <entry key="H2" value="110.31506796823172" />
+      <entry key="H4" value="129.12543834311617" />
+      <entry key="D1" value="149.34699672189276" />
+      <entry key="W1" value="153.32155363179766" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -143,6 +143,7 @@
     "Spring Boot.CartServiceApplication.executor": "Run",
     "Spring Boot.ConfigServerApplication.executor": "Run",
     "Spring Boot.CustomerServiceApplication.executor": "Run",
+    "Spring Boot.WishlistServiceApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
@@ -184,7 +185,7 @@
           <value>
             <map>
               <entry key="AuthServiceApplication" value="FAILED" />
-              <entry key="CartServiceApplication" value="FAILED" />
+              <entry key="CartServiceApplication" value="STOPPED" />
               <entry key="CustomerServiceApplication" value="STOPPED" />
             </map>
           </value>
@@ -192,7 +193,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.CustomerServiceApplication">
+  <component name="RunManager" selected="Spring Boot.Product_Service_Application">
     <configuration name="AdminServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ecommerce.admin_service.AdminServiceApplication" />
       <module name="admin-service" />
@@ -344,7 +345,7 @@
       <workItem from="1785148490341" duration="833000" />
       <workItem from="1785152252303" duration="1499000" />
       <workItem from="1785158354250" duration="152000" />
-      <workItem from="1785158547072" duration="5915000" />
+      <workItem from="1785158547072" duration="7268000" />
     </task>
     <servers />
   </component>
