@@ -1,7 +1,12 @@
 <DataSourcesHistory>
-  <DataSourceFromHistory isRemovedFromProject="false">
+  <DataSourceFromHistory isRemovedFromProject="true">
     <data-source source="LOCAL" name="ecommerce_customer@localhost" uuid="a5c46ee8-1d14-4649-9760-da133d9b47d8">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <database-info product="MySQL" version="8.0.43" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-j-9.7.0 (Revision: 0aade1f13bcc98faf7dda5c02e782481eb291f62)" dbms="MYSQL" exact-version="8.0.43" exact-driver-version="9.7">
+        <extra-name-characters>$</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+        <jdbc-catalog-is-schema>true</jdbc-catalog-is-schema>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
@@ -9,11 +14,15 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/ecommerce_customer</jdbc-url>
       <user-name>root</user-name>
-      <schema-mapping />
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
+        </introspection-scope>
+      </schema-mapping>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </DataSourceFromHistory>
-  <DataSourceFromHistory isRemovedFromProject="false">
+  <DataSourceFromHistory isRemovedFromProject="true">
     <data-source source="LOCAL" name="ecommerce_cart@localhost" uuid="8f6c5ca1-3397-4d02-91f0-f95f8316f340">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
       <driver-ref>mysql.8</driver-ref>
@@ -27,7 +36,7 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </DataSourceFromHistory>
-  <DataSourceFromHistory isRemovedFromProject="false">
+  <DataSourceFromHistory isRemovedFromProject="true">
     <data-source source="LOCAL" name="ecommerce_wishlist@localhost" uuid="c4da54c0-d786-44b2-9cec-3d3ccf5e458d">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
       <driver-ref>mysql.8</driver-ref>
@@ -41,9 +50,14 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </DataSourceFromHistory>
-  <DataSourceFromHistory isRemovedFromProject="false">
+  <DataSourceFromHistory isRemovedFromProject="true">
     <data-source source="LOCAL" name="ecommerce_auth@localhost" uuid="6696e173-c5f7-412c-a829-c8a7fc7d7173">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <database-info product="MySQL" version="8.0.43" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-j-9.7.0 (Revision: 0aade1f13bcc98faf7dda5c02e782481eb291f62)" dbms="MYSQL" exact-version="8.0.43" exact-driver-version="9.7">
+        <extra-name-characters>$</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+        <jdbc-catalog-is-schema>true</jdbc-catalog-is-schema>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
@@ -56,7 +70,11 @@
         <property name="com.intellij.clouds.kubernetes.db.container.port" />
       </jdbc-additional-properties>
       <user-name>root</user-name>
-      <schema-mapping />
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
+        </introspection-scope>
+      </schema-mapping>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </DataSourceFromHistory>

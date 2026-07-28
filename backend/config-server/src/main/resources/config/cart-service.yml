@@ -1,14 +1,11 @@
 server:
-  port: 8083
+  port: 8086
 
 spring:
-  application:
-    name: cart-service
-
   datasource:
-    url: jdbc:mysql://localhost:3306/ecommerce_cart?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/ecommerce_cart_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
-    password: Shrikant@712002
+    password: Rushi@1999
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -19,7 +16,8 @@ spring:
       hibernate:
         format_sql: true
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
