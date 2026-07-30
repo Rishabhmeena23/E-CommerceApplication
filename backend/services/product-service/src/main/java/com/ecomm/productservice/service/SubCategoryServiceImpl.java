@@ -58,10 +58,11 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     @Transactional
     public void delete(Long id) {
         SubCategory subCategory = findSubCategoryOrThrow(id);
-        if (!subCategory.getAllProducts().isEmpty()) {
+        if (subCategory.getAllProducts().stream()
+                .anyMatch(product -> !product.isDeleted())) {
             throw new BusinessRuleException("Cannot delete sub-category with existing products");
         }
-        subCategory.setDeleted(false);
+        subCategory.setDeleted(true);
         subCategoryRepository.save(subCategory);
     }
 
@@ -76,11 +77,13 @@ public class SubCategoryServiceImpl implements SubCategoryService {
                 ? subCategoryRepository.findAll()
                 : subCategoryRepository.findByCategoryId(categoryId);
         return subCategories.stream()
+                .filter(subCategory -> !subCategory.isDeleted())
                 .map(subCategoryMapper::toResponse)
                 .toList();
     }
     SubCategory findSubCategoryOrThrow(Long id) {
         return subCategoryRepository.findById(id)
+                .filter(subCategory -> !subCategory.isDeleted())
                 .orElseThrow(() -> new SubCategoryNotFoundException(id));
     }
 }

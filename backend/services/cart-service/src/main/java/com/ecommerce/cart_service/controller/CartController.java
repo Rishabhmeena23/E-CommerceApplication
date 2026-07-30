@@ -8,9 +8,11 @@ import com.ecommerce.cart_service.dto.AddToCartRequest;
 import com.ecommerce.cart_service.dto.CartResponse;
 import com.ecommerce.cart_service.dto.UpdateQuantityRequest;
 import com.ecommerce.cart_service.service.CartService;
+import com.ecommerce.cart_service.security.AuthenticatedUser;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @RestController
 @RequestMapping("/cart")
@@ -19,60 +21,60 @@ public class CartController {
 
     private final CartService cartService;
 
-    @PostMapping("/{customerId}")
+    @PostMapping
     public ResponseEntity<CartResponse> createCart(
-            @PathVariable Long customerId) {
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
 
         return new ResponseEntity<>(
-                cartService.createCart(customerId),
+                cartService.createCart(currentUser.userId()),
                 HttpStatus.CREATED);
     }
 
-    @GetMapping("/{customerId}")
+    @GetMapping
     public ResponseEntity<CartResponse> getCart(
-            @PathVariable Long customerId) {
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
 
         return ResponseEntity.ok(
-                cartService.getCart(customerId));
+                cartService.getCart(currentUser.userId()));
     }
 
-    @PostMapping("/{customerId}/items")
+    @PostMapping("/items")
     public ResponseEntity<CartResponse> addToCart(
-            @PathVariable Long customerId,
+            @AuthenticationPrincipal AuthenticatedUser currentUser,
             @Valid @RequestBody AddToCartRequest request) {
 
         return ResponseEntity.ok(
-                cartService.addToCart(customerId, request));
+                cartService.addToCart(currentUser.userId(), request));
     }
 
-    @PutMapping("/{customerId}/items/{productId}")
+    @PutMapping("/items/{productId}")
     public ResponseEntity<CartResponse> updateQuantity(
-            @PathVariable Long customerId,
+            @AuthenticationPrincipal AuthenticatedUser currentUser,
             @PathVariable Long productId,
             @Valid @RequestBody UpdateQuantityRequest request) {
 
         return ResponseEntity.ok(
                 cartService.updateQuantity(
-                        customerId,
+                        currentUser.userId(),
                         productId,
                         request));
     }
 
-    @DeleteMapping("/{customerId}/items/{productId}")
+    @DeleteMapping("/items/{productId}")
     public ResponseEntity<String> removeItem(
-            @PathVariable Long customerId,
+            @AuthenticationPrincipal AuthenticatedUser currentUser,
             @PathVariable Long productId) {
 
-        cartService.removeItem(customerId, productId);
+        cartService.removeItem(currentUser.userId(), productId);
 
         return ResponseEntity.ok("Item removed successfully");
     }
 
-    @DeleteMapping("/{customerId}")
+    @DeleteMapping
     public ResponseEntity<String> clearCart(
-            @PathVariable Long customerId) {
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
 
-        cartService.clearCart(customerId);
+        cartService.clearCart(currentUser.userId());
 
         return ResponseEntity.ok("Cart cleared successfully");
     }

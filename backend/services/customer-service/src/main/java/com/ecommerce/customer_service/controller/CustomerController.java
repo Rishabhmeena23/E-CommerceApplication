@@ -3,10 +3,12 @@ package com.ecommerce.customer_service.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import com.ecommerce.customer_service.dto.CustomerRequest;
 import com.ecommerce.customer_service.dto.CustomerResponse;
+import com.ecommerce.customer_service.security.AuthenticatedUser;
 import com.ecommerce.customer_service.service.CustomerService;
 
 import java.util.List;
@@ -20,12 +22,33 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<CustomerResponse> createCustomer(
+            @AuthenticationPrincipal AuthenticatedUser currentUser,
             @Valid @RequestBody CustomerRequest request) {
 
         return new ResponseEntity<>(
-                service.createCustomer(request),
+                service.createCustomer(currentUser.userId(), currentUser.email(), request),
                 HttpStatus.CREATED
         );
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<CustomerResponse> getCurrentCustomer(
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
+        return ResponseEntity.ok(service.getCurrentCustomer(currentUser.userId()));
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<CustomerResponse> updateCurrentCustomer(
+            @AuthenticationPrincipal AuthenticatedUser currentUser,
+            @Valid @RequestBody CustomerRequest request) {
+        return ResponseEntity.ok(service.updateCurrentCustomer(currentUser.userId(), request));
+    }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteCurrentCustomer(
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
+        service.deleteCurrentCustomer(currentUser.userId());
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")

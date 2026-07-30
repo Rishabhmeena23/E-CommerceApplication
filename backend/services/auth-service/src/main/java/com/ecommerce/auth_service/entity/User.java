@@ -39,6 +39,11 @@ public class User {
     @Builder.Default
     private Boolean active = true;
 
+    /** Incremented whenever existing access tokens must become invalid. */
+    @Builder.Default
+    @Column(nullable = false)
+    private Long tokenVersion = 0L;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

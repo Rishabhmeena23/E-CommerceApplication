@@ -26,14 +26,14 @@ public class WishlistServiceImpl implements WishlistService {
     private final WishlistRepository wishlistRepository;
 
     @Override
-    public WishlistResponse createWishlist(Long customerId) {
+    public WishlistResponse createWishlist(Long userId) {
 
-        if (wishlistRepository.existsByCustomerId(customerId)) {
+        if (wishlistRepository.existsByUserId(userId)) {
             throw new RuntimeException("Wishlist already exists");
         }
 
         Wishlist wishlist = Wishlist.builder()
-                .customerId(customerId)
+                .userId(userId)
                 .build();
 
         Wishlist savedWishlist = wishlistRepository.save(wishlist);
@@ -42,9 +42,9 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public WishlistResponse getWishlist(Long customerId) {
+    public WishlistResponse getWishlist(Long userId) {
 
-        Wishlist wishlist = wishlistRepository.findByCustomerId(customerId)
+        Wishlist wishlist = wishlistRepository.findByUserId(userId)
                 .orElseThrow(() ->
                         new WishlistNotFoundException("Wishlist not found"));
 
@@ -52,14 +52,14 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public WishlistResponse addToWishlist(Long customerId,
+    public WishlistResponse addToWishlist(Long userId,
                                           AddToWishlistRequest request) {
 
-        Wishlist wishlist = wishlistRepository.findByCustomerId(customerId)
+        Wishlist wishlist = wishlistRepository.findByUserId(userId)
                 .orElseGet(() ->
                         wishlistRepository.save(
                                 Wishlist.builder()
-                                        .customerId(customerId)
+                                        .userId(userId)
                                         .build()));
 
         boolean exists = wishlist.getWishlistItems()
@@ -85,10 +85,10 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public void removeFromWishlist(Long customerId,
+    public void removeFromWishlist(Long userId,
                                    Long productId) {
 
-        Wishlist wishlist = wishlistRepository.findByCustomerId(customerId)
+        Wishlist wishlist = wishlistRepository.findByUserId(userId)
                 .orElseThrow(() ->
                         new WishlistNotFoundException("Wishlist not found"));
 
@@ -105,9 +105,9 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public void clearWishlist(Long customerId) {
+    public void clearWishlist(Long userId) {
 
-        Wishlist wishlist = wishlistRepository.findByCustomerId(customerId)
+        Wishlist wishlist = wishlistRepository.findByUserId(userId)
                 .orElseThrow(() ->
                         new WishlistNotFoundException("Wishlist not found"));
 
@@ -132,7 +132,7 @@ public class WishlistServiceImpl implements WishlistService {
 
         return WishlistResponse.builder()
                 .wishlistId(wishlist.getWishlistId())
-                .customerId(wishlist.getCustomerId())
+                .userId(wishlist.getUserId())
                 .items(itemResponses)
                 .build();
     }

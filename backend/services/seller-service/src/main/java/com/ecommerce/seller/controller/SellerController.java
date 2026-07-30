@@ -5,16 +5,18 @@ import com.ecommerce.seller.dto.request.UpdateSellerRequest;
 import com.ecommerce.seller.dto.request.UpdateSellerStatusRequest;
 import com.ecommerce.seller.dto.response.SellerResponse;
 import com.ecommerce.seller.service.SellerService;
+import com.ecommerce.seller.security.AuthenticatedUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sellers")
+@RequestMapping("/sellers")
 @RequiredArgsConstructor
 public class SellerController {
 
@@ -22,10 +24,11 @@ public class SellerController {
 
     @PostMapping
     public ResponseEntity<SellerResponse> createSeller(
+            @AuthenticationPrincipal AuthenticatedUser currentUser,
             @Valid @RequestBody CreateSellerRequest request
     ) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(sellerService.createSeller(request));
+                .body(sellerService.createSeller(currentUser.userId(), request));
     }
 
     @GetMapping("/{sellerId}")
@@ -42,6 +45,12 @@ public class SellerController {
         return ResponseEntity.ok(sellerService.getSellerByUserId(userId));
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<SellerResponse> getCurrentSeller(
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
+        return ResponseEntity.ok(sellerService.getSellerByUserId(currentUser.userId()));
+    }
+
     @GetMapping
     public ResponseEntity<List<SellerResponse>> getAllSellers() {
         return ResponseEntity.ok(sellerService.getAllSellers());
@@ -50,10 +59,11 @@ public class SellerController {
     @PutMapping("/{sellerId}")
     public ResponseEntity<SellerResponse> updateSeller(
             @PathVariable Long sellerId,
+            @AuthenticationPrincipal AuthenticatedUser currentUser,
             @Valid @RequestBody UpdateSellerRequest request
     ) {
         return ResponseEntity.ok(
-                sellerService.updateSeller(sellerId, request)
+                sellerService.updateSeller(sellerId, currentUser.userId(), request)
         );
     }
 
@@ -69,9 +79,10 @@ public class SellerController {
 
     @DeleteMapping("/{sellerId}")
     public ResponseEntity<Void> deactivateSeller(
-            @PathVariable Long sellerId
+            @PathVariable Long sellerId,
+            @AuthenticationPrincipal AuthenticatedUser currentUser
     ) {
-        sellerService.deactivateSeller(sellerId);
+        sellerService.deactivateSeller(sellerId, currentUser.userId());
         return ResponseEntity.noContent().build();
     }
 }

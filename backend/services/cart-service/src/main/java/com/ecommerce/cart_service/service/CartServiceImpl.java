@@ -16,6 +16,7 @@ import com.ecommerce.cart_service.entity.CartItem;
 import com.ecommerce.cart_service.exception.CartNotFoundException;
 import com.ecommerce.cart_service.exception.ProductNotFoundException;
 import com.ecommerce.cart_service.repository.CartRepository;
+import com.ecommerce.cart_service.client.ProductClient;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,16 +26,17 @@ import lombok.RequiredArgsConstructor;
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
+    private final ProductClient productClient;
 
     @Override
-    public CartResponse createCart(Long customerId) {
+    public CartResponse createCart(Long userId) {
 
-        if (cartRepository.existsByCustomerId(customerId)) {
+        if (cartRepository.existsByUserId(userId)) {
             throw new RuntimeException("Cart already exists");
         }
 
         Cart cart = Cart.builder()
-                .customerId(customerId)
+                .userId(userId)
                 .build();
 
         Cart savedCart = cartRepository.save(cart);
@@ -43,9 +45,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponse getCart(Long customerId) {
+    public CartResponse getCart(Long userId) {
 
-        Cart cart = cartRepository.findByCustomerId(customerId)
+        Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() ->
                         new CartNotFoundException("Cart not found"));
 
@@ -53,15 +55,18 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponse addToCart(Long customerId,
+    public CartResponse addToCart(Long userId,
                                   AddToCartRequest request) {
 
-        Cart cart = cartRepository.findByCustomerId(customerId)
+        Cart cart = cartRepository.findByUserId(userId)
                 .orElseGet(() ->
                         cartRepository.save(
                                 Cart.builder()
-                                        .customerId(customerId)
+                                        .userId(userId)
                                         .build()));
+
+        ProductClient.ProductSnapshot product = productClient.getProduct(request.getProductId());
+        int requestedQuantity = request.getQuantity();
 
         CartItem existingItem = cart.getCartItems()
                 .stream()
@@ -72,18 +77,22 @@ public class CartServiceImpl implements CartService {
 
         if (existingItem != null) {
 
+            requestedQuantity += existingItem.getQuantity();
+            validateAvailableStock(product, requestedQuantity);
+
             existingItem.setQuantity(
-                    existingItem.getQuantity() + request.getQuantity());
+                    requestedQuantity);
 
         } else {
+
+            validateAvailableStock(product, requestedQuantity);
 
             CartItem item = CartItem.builder()
                     .cart(cart)
                     .productId(request.getProductId())
                     .quantity(request.getQuantity())
 
-                    // Replace with Product Service price later
-                    .price(BigDecimal.ZERO)
+                    .price(product.price())
                     .build();
 
             cart.getCartItems().add(item);
@@ -95,11 +104,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponse updateQuantity(Long customerId,
+    public CartResponse updateQuantity(Long userId,
                                        Long productId,
                                        UpdateQuantityRequest request) {
 
-        Cart cart = cartRepository.findByCustomerId(customerId)
+        Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() ->
                         new CartNotFoundException("Cart not found"));
 
@@ -110,6 +119,8 @@ public class CartServiceImpl implements CartService {
                 .orElseThrow(() ->
                         new ProductNotFoundException("Product not found in cart"));
 
+        ProductClient.ProductSnapshot product = productClient.getProduct(productId);
+        validateAvailableStock(product, request.getQuantity());
         item.setQuantity(request.getQuantity());
 
         Cart updatedCart = cartRepository.save(cart);
@@ -118,10 +129,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void removeItem(Long customerId,
+    public void removeItem(Long userId,
                            Long productId) {
 
-        Cart cart = cartRepository.findByCustomerId(customerId)
+        Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() ->
                         new CartNotFoundException("Cart not found"));
 
@@ -137,9 +148,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void clearCart(Long customerId) {
+    public void clearCart(Long userId) {
 
-        Cart cart = cartRepository.findByCustomerId(customerId)
+        Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() ->
                         new CartNotFoundException("Cart not found"));
 
@@ -174,9 +185,16 @@ public class CartServiceImpl implements CartService {
 
         return CartResponse.builder()
                 .cartId(cart.getCartId())
-                .customerId(cart.getCustomerId())
+                .userId(cart.getUserId())
                 .items(items)
                 .totalAmount(total)
                 .build();
+    }
+
+    private void validateAvailableStock(ProductClient.ProductSnapshot product, int quantity) {
+        if (product == null || product.price() == null || product.inventory() == null
+                || product.inventory().availableQuantity() < quantity) {
+            throw new ProductNotFoundException("Product is unavailable or does not have enough stock");
+        }
     }
 }

@@ -12,7 +12,7 @@ public class CartResponse {
 
     private Long cartId;
 
-    private Long customerId;
+    private Long userId;
 
     private List<CartItemResponse> items;
 

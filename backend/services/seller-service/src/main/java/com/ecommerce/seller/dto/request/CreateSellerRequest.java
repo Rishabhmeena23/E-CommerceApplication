@@ -12,9 +12,6 @@ import lombok.Setter;
 @Setter
 public class CreateSellerRequest {
 
-    @NotNull(message = "User ID is required")
-    private Long userId;
-
     @NotBlank(message = "Shop name is required")
     @Size(max = 150, message = "Shop name must not exceed 150 characters")
     private String shopName;
@@ -26,7 +23,7 @@ public class CreateSellerRequest {
     private String phone;
 
     @Pattern(
-            regexp = "^[0-9A-Z]{15}$",
+            regexp = "^$|^[0-9A-Z]{15}$",
             message = "GST number must be 15 uppercase letters and numbers"
     )
     private String gstNumber;

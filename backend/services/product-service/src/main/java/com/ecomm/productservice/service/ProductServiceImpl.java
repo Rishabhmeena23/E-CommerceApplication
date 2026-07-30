@@ -11,6 +11,7 @@ import com.ecomm.productservice.mapper.ProductMapper;
 import com.ecomm.productservice.repository.ProductRepository;
 import com.ecomm.productservice.repository.SubCategoryRepository;
 import com.ecomm.productservice.specification.ProductSpecification;
+import com.ecomm.productservice.security.AuthenticatedUser;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -39,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
         SubCategory subCategory = subCategoryRepository.findById(request.getSubCategoryId())
                 .orElseThrow(() -> new SubCategoryNotFoundException(request.getSubCategoryId()));
         Product product = productMapper.toEntity(request);
+        product.setSellerUserId(currentUserId());
         product.setSubCategory(subCategory);
         return productMapper.toResponse(productRepository.save(product));
     }
@@ -47,6 +52,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductResponse update(Long id, ProductRequest request) {
         Product product = findProductOrThrow(id);
+        requireProductOwner(product);
         productRepository.findBySkuIgnoreCase(request.getSku())
                 .filter(existing -> !existing.getId().equals(id))
                 .ifPresent(existing -> {
@@ -63,7 +69,8 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void delete(Long id) {
         Product product = findProductOrThrow(id);
-        product.setDeleted(false);
+        requireProductOwner(product);
+        product.setDeleted(true);
         productRepository.save(product);
     }
 
@@ -75,6 +82,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> getAll() {
         return productRepository.findAll().stream()
+                .filter(product -> !product.isDeleted())
                 .map(productMapper::toResponse)
                 .toList();
     }
@@ -90,7 +98,8 @@ public class ProductServiceImpl implements ProductService {
             Pageable pageable
     ) {
         Specification<Product> specification = Specification
-                .where(ProductSpecification.hasKeyword(keyword))
+                .where(ProductSpecification.isNotDeleted())
+                .and(ProductSpecification.hasKeyword(keyword))
                 .and(ProductSpecification.hasCategoryId(categoryId))
                 .and(ProductSpecification.hasSubCategoryId(subCategoryId))
                 .and(ProductSpecification.hasBrand(brand))
@@ -101,6 +110,24 @@ public class ProductServiceImpl implements ProductService {
     }
     Product findProductOrThrow(Long id) {
         return productRepository.findById(id)
+                .filter(product -> !product.isDeleted())
                 .orElseThrow(() -> new ProductNotFoundException(id));
+    }
+
+    void requireProductOwner(Product product) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean admin = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
+        if (!admin && !product.getSellerUserId().equals(currentUserId())) {
+            throw new AccessDeniedException("You can only modify your own products");
+        }
+    }
+
+    private Long currentUserId() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof AuthenticatedUser user) {
+            return user.userId();
+        }
+        throw new AccessDeniedException("Authenticated user identity is unavailable");
     }
 }

@@ -1,7 +1,9 @@
 package com.ecommerce.auth_service.service.impl;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.auth_service.dto.AuthResponse;
 import com.ecommerce.auth_service.dto.LoginRequest;
@@ -26,7 +28,8 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse register(RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Email already exists");
         }
 
         User user = User.builder()
@@ -41,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
 
         return AuthResponse.builder()
                 .message("Registration Successful")
-                .token(null)
+                .token(jwtService.generateToken(savedUser))
                 .userId(savedUser.getId())
                 .name(savedUser.getName())
                 .email(savedUser.getEmail())
@@ -54,17 +57,21 @@ public class AuthServiceImpl implements AuthService {
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() ->
-                        new RuntimeException("Invalid email or password"));
+                        new ResponseStatusException(
+                                HttpStatus.UNAUTHORIZED,
+                                "Invalid email or password"));
 
         if (!passwordEncoder.matches(
                 request.getPassword(),
                 user.getPassword())) {
 
-            throw new RuntimeException("Invalid email or password");
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "Invalid email or password");
         }
 
         if (!Boolean.TRUE.equals(user.getActive())) {
-            throw new RuntimeException("User account is disabled");
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "User account is disabled");
         }
 
         String token = jwtService.generateToken(user);

@@ -22,8 +22,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
 
-    @Column(nullable = false, unique = true)
-    private Long customerId;
+    @Column(name = "customer_id", nullable = false, unique = true)
+    private Long userId;
 
     @Builder.Default
     @OneToMany(

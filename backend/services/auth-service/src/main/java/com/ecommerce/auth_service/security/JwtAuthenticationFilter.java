@@ -9,6 +9,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.ecommerce.auth_service.entity.User;
+import com.ecommerce.auth_service.repository.UserRepository;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,9 +21,13 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
+    private final UserRepository userRepository;
 
-    public JwtAuthenticationFilter(JwtService jwtService) {
+    public JwtAuthenticationFilter(
+            JwtService jwtService,
+            UserRepository userRepository) {
         this.jwtService = jwtService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -46,23 +53,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 && SecurityContextHolder.getContext()
                         .getAuthentication() == null) {
 
-            String email = jwtService.extractEmail(token);
-            String role = jwtService.extractRole(token);
+            Long userId = jwtService.extractUserId(token);
+            Long tokenVersion = jwtService.extractTokenVersion(token);
 
-            SimpleGrantedAuthority authority =
-                    new SimpleGrantedAuthority("ROLE_" + role);
-
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(
-                            email,
-                            null,
-                            List.of(authority)
-                    );
-
-            SecurityContextHolder.getContext()
-                    .setAuthentication(authentication);
+            userRepository.findById(userId)
+                    .filter(user -> Boolean.TRUE.equals(user.getActive()))
+                    .filter(user -> user.getTokenVersion().equals(tokenVersion))
+                    .ifPresent(user -> authenticate(user));
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void authenticate(User user) {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(
+                "ROLE_" + user.getRole().name());
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(
+                        new AuthenticatedUser(user.getId(), user.getEmail()),
+                        null,
+                        List.of(authority));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

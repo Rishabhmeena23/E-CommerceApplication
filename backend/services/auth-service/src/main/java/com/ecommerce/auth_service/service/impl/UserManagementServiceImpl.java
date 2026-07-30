@@ -3,6 +3,8 @@ package com.ecommerce.auth_service.service.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.auth_service.dto.UserDto;
 import com.ecommerce.auth_service.entity.Role;
@@ -41,6 +43,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         User user = findUser(id);
 
         user.setActive(false);
+        revokeExistingTokens(user);
 
         return toDto(userRepository.save(user));
     }
@@ -51,6 +54,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         User user = findUser(id);
 
         user.setActive(true);
+        revokeExistingTokens(user);
 
         return toDto(userRepository.save(user));
     }
@@ -65,12 +69,13 @@ public class UserManagementServiceImpl implements UserManagementService {
         try {
             newRole = Role.valueOf(role.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException(
-                    "Invalid role. Allowed roles: CUSTOMER, SELLER, ADMIN"
-            );
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid role. Allowed roles: CUSTOMER, SELLER, ADMIN");
         }
 
         user.setRole(newRole);
+        revokeExistingTokens(user);
 
         return toDto(userRepository.save(user));
     }
@@ -79,7 +84,13 @@ public class UserManagementServiceImpl implements UserManagementService {
 
         return userRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("User not found with id: " + id));
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "User not found with id: " + id));
+    }
+
+    private void revokeExistingTokens(User user) {
+        user.setTokenVersion(user.getTokenVersion() + 1);
     }
 
     private UserDto toDto(User user) {

@@ -6,20 +6,20 @@ import com.ecommerce.cart_service.dto.UpdateQuantityRequest;
 
 public interface CartService {
 
-    CartResponse createCart(Long customerId);
+    CartResponse createCart(Long userId);
 
-    CartResponse getCart(Long customerId);
+    CartResponse getCart(Long userId);
 
-    CartResponse addToCart(Long customerId,
+    CartResponse addToCart(Long userId,
                            AddToCartRequest request);
 
-    CartResponse updateQuantity(Long customerId,
+    CartResponse updateQuantity(Long userId,
                                 Long productId,
                                 UpdateQuantityRequest request);
 
-    void removeItem(Long customerId,
+    void removeItem(Long userId,
                     Long productId);
 
-    void clearCart(Long customerId);
+    void clearCart(Long userId);
 
 }

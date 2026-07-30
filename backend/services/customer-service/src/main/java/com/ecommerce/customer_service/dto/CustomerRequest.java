@@ -18,8 +18,6 @@ public class CustomerRequest {
 	private String lastName;
 	
 	@NotBlank
-	private String email;
-	
 	@Pattern(regexp = "^[0-9]{10}$")
 	private String phone;
 	

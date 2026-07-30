@@ -23,7 +23,7 @@ public class UpdateSellerRequest {
     private String phone;
 
     @Pattern(
-            regexp = "^[0-9A-Z]{15}$",
+            regexp = "^$|^[0-9A-Z]{15}$",
             message = "GST number must be 15 uppercase letters and numbers"
     )
     private String gstNumber;

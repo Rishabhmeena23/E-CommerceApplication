@@ -4,13 +4,15 @@ server:
 services:
   auth:
     url: http://localhost:8081
+  product:
+    url: http://localhost:8085
 
 eureka:
   instance:
     prefer-ip-address: true
 
 jwt:
-  secret: ${JWT_SECRET:ThisIsADevelopmentSecretKeyForJwtSigning123456789}
+  secret: ${JWT_SECRET:change-me-in-production-please-use-a-32+char-secret!}
 
 management:
   endpoints:

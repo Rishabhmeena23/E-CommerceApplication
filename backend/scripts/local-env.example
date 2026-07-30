@@ -1,0 +1,16 @@
+# Copy this file to .local-env, replace the database passwords, then run:
+#   source .local-env
+# Start every service from the same terminal so they share these values.
+
+# Generate once with: openssl rand -base64 48
+export JWT_SECRET='replace-with-one-shared-48-byte-secret'
+
+# Generate once with: openssl rand -base64 48
+export INTERNAL_SERVICE_KEY='replace-with-one-shared-internal-service-key'
+
+export AUTH_DB_PASSWORD='replace-me'
+export CUSTOMER_DB_PASSWORD='replace-me'
+export CART_DB_PASSWORD='replace-me'
+export WISHLIST_DB_PASSWORD='replace-me'
+export SELLER_DB_PASSWORD='replace-me'
+export PRODUCT_DB_PASSWORD='replace-me'

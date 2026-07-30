@@ -43,6 +43,10 @@ public class SecurityConfig {
 
                         // Registration and login must remain public
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/error").permitAll()
+
+                        // Protected separately with the internal service key.
+                        .requestMatchers("/internal/auth/**").permitAll()
 
                         // User management is ADMIN only
                         .requestMatchers("/users/**").hasRole("ADMIN")

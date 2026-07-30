@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface SellerService {
 
-    SellerResponse createSeller(CreateSellerRequest request);
+    SellerResponse createSeller(Long userId, CreateSellerRequest request);
 
     SellerResponse getSellerById(Long sellerId);
 
@@ -17,7 +17,7 @@ public interface SellerService {
 
     List<SellerResponse> getAllSellers();
 
-    SellerResponse updateSeller(Long sellerId, UpdateSellerRequest request);
+    SellerResponse updateSeller(Long sellerId, Long requesterUserId, UpdateSellerRequest request);
 
     SellerResponse updateSellerStatus(
             Long sellerId,
@@ -25,5 +25,5 @@ public interface SellerService {
     );
 
     // Soft Delete
-    void deactivateSeller(Long sellerId);
+    void deactivateSeller(Long sellerId, Long requesterUserId);
 }

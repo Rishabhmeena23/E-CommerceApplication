@@ -6,7 +6,13 @@ import com.ecommerce.customer_service.dto.CustomerRequest;
 import com.ecommerce.customer_service.dto.CustomerResponse;
 
 public interface CustomerService {
-	CustomerResponse createCustomer(CustomerRequest request);
+	CustomerResponse createCustomer(Long userId, String email, CustomerRequest request);
+
+    CustomerResponse getCurrentCustomer(Long userId);
+
+    CustomerResponse updateCurrentCustomer(Long userId, CustomerRequest request);
+
+    void deleteCurrentCustomer(Long userId);
 	
 	CustomerResponse getCustomerById(Long id);
 	

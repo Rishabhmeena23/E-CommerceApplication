@@ -22,8 +22,8 @@ public class Wishlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long wishlistId;
 
-    @Column(nullable = false, unique = true)
-    private Long customerId;
+    @Column(name = "customer_id", nullable = false, unique = true)
+    private Long userId;
 
     @Builder.Default
     @OneToMany(

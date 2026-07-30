@@ -18,6 +18,9 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long customerId;
+
+    @Column(nullable = false, unique = true, updatable = false)
+    private Long userId;
 	
 	@Column(nullable = false)
     private String firstName;
@@ -33,5 +36,6 @@ public class Customer {
 
     private String gender;
 
+    @Builder.Default
     private boolean active = true;
 }

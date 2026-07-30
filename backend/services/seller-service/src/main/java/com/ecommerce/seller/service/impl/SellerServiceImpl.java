@@ -22,11 +22,11 @@ public class SellerServiceImpl implements SellerService {
     private final SellerRepository sellerRepository;
 
     @Override
-    public SellerResponse createSeller(CreateSellerRequest request) {
+    public SellerResponse createSeller(Long userId, CreateSellerRequest request) {
 
-        if (sellerRepository.existsByUserId(request.getUserId())) {
+        if (sellerRepository.existsByUserId(userId)) {
             throw new ResourceAlreadyExistsException(
-                    "Seller already exists for user ID: " + request.getUserId()
+                    "Seller already exists for user ID: " + userId
             );
         }
 
@@ -38,7 +38,7 @@ public class SellerServiceImpl implements SellerService {
         }
 
         Seller seller = Seller.builder()
-                .userId(request.getUserId())
+                .userId(userId)
                 .shopName(request.getShopName())
                 .shopDescription(request.getShopDescription())
                 .phone(request.getPhone())
@@ -74,9 +74,10 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public SellerResponse updateSeller(Long sellerId, UpdateSellerRequest request) {
+    public SellerResponse updateSeller(Long sellerId, Long requesterUserId, UpdateSellerRequest request) {
 
         Seller seller = findSellerById(sellerId);
+        requireOwner(seller, requesterUserId);
 
         if (request.getGstNumber() != null
                 && sellerRepository.existsByGstNumberAndSellerIdNot(
@@ -110,9 +111,10 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public void deactivateSeller(Long sellerId) {
+    public void deactivateSeller(Long sellerId, Long requesterUserId) {
 
         Seller seller = findSellerById(sellerId);
+        requireOwner(seller, requesterUserId);
 
         seller.setActive(false);
 
@@ -125,6 +127,13 @@ public class SellerServiceImpl implements SellerService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Seller not found with ID: " + sellerId
                 ));
+    }
+
+    private void requireOwner(Seller seller, Long requesterUserId) {
+        if (!seller.getUserId().equals(requesterUserId)) {
+            throw new org.springframework.security.access.AccessDeniedException(
+                    "You can only modify your own seller profile");
+        }
     }
 
     private SellerResponse mapToResponse(Seller seller) {

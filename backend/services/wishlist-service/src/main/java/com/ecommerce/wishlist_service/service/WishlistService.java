@@ -5,16 +5,16 @@ import com.ecommerce.wishlist_service.dto.WishlistResponse;
 
 public interface WishlistService {
 
-    WishlistResponse createWishlist(Long customerId);
+    WishlistResponse createWishlist(Long userId);
 
-    WishlistResponse getWishlist(Long customerId);
+    WishlistResponse getWishlist(Long userId);
 
-    WishlistResponse addToWishlist(Long customerId,
+    WishlistResponse addToWishlist(Long userId,
                                    AddToWishlistRequest request);
 
-    void removeFromWishlist(Long customerId,
+    void removeFromWishlist(Long userId,
                             Long productId);
 
-    void clearWishlist(Long customerId);
+    void clearWishlist(Long userId);
 
 }

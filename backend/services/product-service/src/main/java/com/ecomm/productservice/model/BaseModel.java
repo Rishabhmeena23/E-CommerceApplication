@@ -22,11 +22,11 @@ public class BaseModel {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private LocalDateTime CreatedAt;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(nullable = false)
-    private LocalDateTime UpdatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(nullable = false)
     private boolean deleted;

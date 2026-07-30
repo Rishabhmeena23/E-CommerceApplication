@@ -28,6 +28,7 @@ public class InventoryServiceImpl implements InventoryService {
     @Transactional
     public InventoryResponse create(Long productId, InventoryRequest request) {
         Product product = productService.findProductOrThrow(productId);
+        productService.requireProductOwner(product);
         if (inventoryRepository.existsByProductId(productId)) {
             throw new BusinessRuleException("Inventory already exists for product id: " + productId);
         }
@@ -44,6 +45,7 @@ public class InventoryServiceImpl implements InventoryService {
     @Transactional
     public InventoryResponse updateStock(Long productId, InventoryRequest request) {
         Inventory inventory = findInventoryOrThrow(productId);
+        productService.requireProductOwner(inventory.getProduct());
         inventoryMapper.updateEntity(request, inventory);
         validateQuantities(inventory);
         return inventoryMapper.toResponse(inventory);
@@ -53,6 +55,7 @@ public class InventoryServiceImpl implements InventoryService {
     @Transactional
     public InventoryResponse increaseStock(Long productId, StockAdjustmentRequest request) {
         Inventory inventory = findInventoryOrThrow(productId);
+        productService.requireProductOwner(inventory.getProduct());
         inventory.setQuantity(inventory.getQuantity() + request.getQuantity());
         return inventoryMapper.toResponse(inventory);
     }
@@ -61,6 +64,7 @@ public class InventoryServiceImpl implements InventoryService {
     @Transactional
     public InventoryResponse decreaseStock(Long productId, StockAdjustmentRequest request) {
         Inventory inventory = findInventoryOrThrow(productId);
+        productService.requireProductOwner(inventory.getProduct());
         int available = inventory.getQuantity() - inventory.getReservedQuantity();
         if (request.getQuantity() > available) {
             throw new InsufficientStockException(request.getQuantity(), available);

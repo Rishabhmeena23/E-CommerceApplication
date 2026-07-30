@@ -26,6 +26,7 @@ public class ProductImageServiceImpl implements ProductImageService {
     @Transactional
     public List<ProductImageResponse> addImages(Long productId, List<ProductImageRequest> requests) {
         Product product = productService.findProductOrThrow(productId);
+        productService.requireProductOwner(product);
         List<ProductImage> images = requests.stream()
                 .map(request -> {
                     ProductImage image = productMapper.toImageEntity(request);
@@ -45,6 +46,7 @@ public class ProductImageServiceImpl implements ProductImageService {
     @Transactional
     public ProductImageResponse updateImage(Long productId, Long imageId, ProductImageRequest request) {
         ProductImage image = findImageOrThrow(productId, imageId);
+        productService.requireProductOwner(image.getProduct());
         if (request.isPrimaryImage()) {
             clearPrimaryFlag(image.getProduct());
         }
@@ -56,7 +58,8 @@ public class ProductImageServiceImpl implements ProductImageService {
     @Transactional
     public void deleteImage(Long productId, Long imageId) {
         ProductImage image = findImageOrThrow(productId, imageId);
-        image.setDeleted(false);
+        productService.requireProductOwner(image.getProduct());
+        image.setDeleted(true);
         productImageRepository.save(image);
     }
 

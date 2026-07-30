@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import com.ecommerce.wishlist_service.dto.AddToWishlistRequest;
 import com.ecommerce.wishlist_service.dto.WishlistResponse;
 import com.ecommerce.wishlist_service.service.WishlistService;
+import com.ecommerce.wishlist_service.security.AuthenticatedUser;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @RestController
 @RequestMapping("/wishlist")
@@ -18,47 +20,47 @@ public class WishlistController {
 
     private final WishlistService wishlistService;
 
-    @PostMapping("/{customerId}")
+    @PostMapping
     public ResponseEntity<WishlistResponse> createWishlist(
-            @PathVariable Long customerId) {
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
 
         return new ResponseEntity<>(
-                wishlistService.createWishlist(customerId),
+                wishlistService.createWishlist(currentUser.userId()),
                 HttpStatus.CREATED);
     }
 
-    @GetMapping("/{customerId}")
+    @GetMapping
     public ResponseEntity<WishlistResponse> getWishlist(
-            @PathVariable Long customerId) {
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
 
         return ResponseEntity.ok(
-                wishlistService.getWishlist(customerId));
+                wishlistService.getWishlist(currentUser.userId()));
     }
 
-    @PostMapping("/{customerId}/items")
+    @PostMapping("/items")
     public ResponseEntity<WishlistResponse> addToWishlist(
-            @PathVariable Long customerId,
+            @AuthenticationPrincipal AuthenticatedUser currentUser,
             @Valid @RequestBody AddToWishlistRequest request) {
 
         return ResponseEntity.ok(
-                wishlistService.addToWishlist(customerId, request));
+                wishlistService.addToWishlist(currentUser.userId(), request));
     }
 
-    @DeleteMapping("/{customerId}/items/{productId}")
+    @DeleteMapping("/items/{productId}")
     public ResponseEntity<String> removeProduct(
-            @PathVariable Long customerId,
+            @AuthenticationPrincipal AuthenticatedUser currentUser,
             @PathVariable Long productId) {
 
-        wishlistService.removeFromWishlist(customerId, productId);
+        wishlistService.removeFromWishlist(currentUser.userId(), productId);
 
         return ResponseEntity.ok("Product removed successfully");
     }
 
-    @DeleteMapping("/{customerId}")
+    @DeleteMapping
     public ResponseEntity<String> clearWishlist(
-            @PathVariable Long customerId) {
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
 
-        wishlistService.clearWishlist(customerId);
+        wishlistService.clearWishlist(currentUser.userId());
 
         return ResponseEntity.ok("Wishlist cleared successfully");
     }

@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 public final class ProductSpecification {
     private ProductSpecification() {
     }
+    public static Specification<Product> isNotDeleted() {
+        return (root, query, cb) -> cb.isFalse(root.get("deleted"));
+    }
     public static Specification<Product> hasKeyword(String keyword) {
         return (root, query, cb) -> {
             if (keyword == null || keyword.isBlank()) {

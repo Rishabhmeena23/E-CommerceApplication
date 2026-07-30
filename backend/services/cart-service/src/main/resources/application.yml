@@ -9,3 +9,16 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret: ${JWT_SECRET:change-me-in-production-please-use-a-32+char-secret!}
+  expiration: ${JWT_EXPIRATION:86400000}
+
+services:
+  auth:
+    url: ${AUTH_SERVICE_URL:http://localhost:8081}
+  product:
+    url: ${PRODUCT_SERVICE_URL:http://localhost:8085}
+internal:
+  service:
+    key: ${INTERNAL_SERVICE_KEY:change-me-in-production}

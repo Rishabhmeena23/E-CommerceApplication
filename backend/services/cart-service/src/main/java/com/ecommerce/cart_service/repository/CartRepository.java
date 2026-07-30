@@ -10,8 +10,8 @@ import com.ecommerce.cart_service.entity.Cart;
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
-    Optional<Cart> findByCustomerId(Long customerId);
+    Optional<Cart> findByUserId(Long userId);
 
-    boolean existsByCustomerId(Long customerId);
+    boolean existsByUserId(Long userId);
 
 }

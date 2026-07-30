@@ -1,7 +1,5 @@
 package com.ecomm.productservice.controller;
 
-import org.springframework.web.bind.annotation.*;
-
 import com.ecomm.productservice.dto.request.CategoryRequest;
 import com.ecomm.productservice.dto.response.CategoryResponse;
 import com.ecomm.productservice.service.CategoryService;

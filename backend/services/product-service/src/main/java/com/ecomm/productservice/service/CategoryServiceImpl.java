@@ -49,7 +49,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public void delete(Long id) {
         Category category = findCategoryOrThrow(id);
-        if (!category.getSubCategories().isEmpty()) {
+        if (category.getSubCategories().stream()
+                .anyMatch(subCategory -> !subCategory.isDeleted())) {
             throw new BusinessRuleException("Cannot delete category with existing sub-categories");
         }
         category.setDeleted(true);
@@ -64,12 +65,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponse> getAll() {
         return categoryRepository.findAll().stream()
+                .filter(category -> !category.isDeleted())
                 .map(categoryMapper::toResponse)
                 .toList();
     }
 
     private Category findCategoryOrThrow(Long id) {
         return categoryRepository.findById(id)
+                .filter(category -> !category.isDeleted())
                 .orElseThrow(() -> new CategoryNotFoundException(id));
     }
 }

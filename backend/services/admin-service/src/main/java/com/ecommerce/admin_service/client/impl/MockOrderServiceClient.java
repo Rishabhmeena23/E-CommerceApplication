@@ -13,22 +13,7 @@ public class MockOrderServiceClient implements OrderServiceClient {
 
     @Override
     public List<OrderDto> getAllOrders() {
-
-        return List.of(
-
-                new OrderDto(
-                        1L,
-                        1L,
-                        new BigDecimal("75000"),
-                        "PLACED"
-                ),
-
-                new OrderDto(
-                        2L,
-                        1L,
-                        new BigDecimal("30000"),
-                        "DELIVERED"
-                )
-        );
+        // Order Service is not part of this backend yet. Do not report fabricated data.
+        return List.of();
     }
 }

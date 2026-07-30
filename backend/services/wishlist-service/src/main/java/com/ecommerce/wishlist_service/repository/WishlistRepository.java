@@ -10,8 +10,8 @@ import com.ecommerce.wishlist_service.entity.Wishlist;
 @Repository
 public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
 
-    Optional<Wishlist> findByCustomerId(Long customerId);
+    Optional<Wishlist> findByUserId(Long userId);
 
-    boolean existsByCustomerId(Long customerId);
+    boolean existsByUserId(Long userId);
 
 }

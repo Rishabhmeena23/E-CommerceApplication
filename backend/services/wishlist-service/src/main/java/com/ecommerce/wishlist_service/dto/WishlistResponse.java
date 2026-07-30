@@ -11,7 +11,7 @@ public class WishlistResponse {
 
     private Long wishlistId;
 
-    private Long customerId;
+    private Long userId;
 
     private List<WishlistItemResponse> items;
 

@@ -30,6 +30,9 @@ public class Product extends BaseModel {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false, updatable = false)
+    private Long sellerUserId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_category_id", nullable = false)
     private SubCategory subCategory;

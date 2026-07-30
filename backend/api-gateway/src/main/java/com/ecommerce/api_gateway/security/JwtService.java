@@ -59,4 +59,10 @@ public class JwtService {
                 ? userId.longValue()
                 : null;
     }
+
+    public Long extractTokenVersion(String token) {
+        Number tokenVersion = extractAllClaims(token)
+                .get("tokenVersion", Number.class);
+        return tokenVersion != null ? tokenVersion.longValue() : -1L;
+    }
 }

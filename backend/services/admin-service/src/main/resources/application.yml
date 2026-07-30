@@ -28,6 +28,13 @@ spring:
   config:
     import: configserver:http://localhost:8888
 
+jwt:
+  secret: ${JWT_SECRET:change-me-in-production-please-use-a-32+char-secret!}
+
+internal:
+  service:
+    key: ${INTERNAL_SERVICE_KEY:change-me-in-production}
+
 eureka:
   client:
     service-url:
