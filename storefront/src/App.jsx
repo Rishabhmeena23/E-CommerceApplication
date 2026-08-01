@@ -1,14 +1,15 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import {
   ArrowRight, BadgeCheck, BarChart3, Box, Check, ChevronDown, CircleUserRound,
-  Heart, LayoutDashboard, LogOut, Menu, Package, Pencil, Plus, Search,
+  CreditCard, Heart, LayoutDashboard, LogOut, Menu, Package, Pencil, Plus, ReceiptText, Search,
   Settings, ShieldCheck, ShoppingBag, ShoppingCart, SlidersHorizontal, Sparkles,
-  Store, Trash2, TrendingUp, UserRound, Users, X,
+  Store, Trash2, TrendingUp, Truck, UserRound, Users, X,
 } from 'lucide-react'
 import { getSession, saveSession } from './api/client'
 import {
-  adminApi, authApi, cartApi, categoryApi, customerApi, productApi, sellerApi,
-  subCategoryApi, userApi, wishlistApi,
+  adminApi, authApi, cartApi, categoryApi, customerApi, orderApi, paymentApi,
+  productApi, sellerApi, subCategoryApi, userApi, wishlistApi,
 } from './api/services'
 
 const money = (value) =>
@@ -24,22 +25,6 @@ const placeholderColors = [
   'linear-gradient(145deg, #ece7f2 0%, #c9bdd8 100%)',
   'linear-gradient(145deg, #e5edf0 0%, #afc7ce 100%)',
 ]
-
-function useHashPage() {
-  const read = () => window.location.hash.replace('#/', '') || 'shop'
-  const [page, setPageState] = useState(read)
-  useEffect(() => {
-    const onHash = () => setPageState(read())
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
-  }, [])
-  const setPage = (next) => {
-    window.location.hash = `/${next}`
-    setPageState(next)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-  return [page, setPage]
-}
 
 function Modal({ open, onClose, title, subtitle, children, wide = false }) {
   useEffect(() => {
@@ -120,7 +105,7 @@ function AuthModal({ open, onClose, onAuthenticated, notify }) {
       <div className="auth-mark"><Sparkles size={21} /></div>
       <h2>{mode === 'login' ? 'Welcome back' : 'Create your account'}</h2>
       <p className="modal-subtitle">
-        {mode === 'login' ? 'Sign in to continue your Mercato journey.' : 'Join as a customer. You can apply to sell later.'}
+        {mode === 'login' ? 'Sign in to continue your Shoping journey.' : 'Join as a customer. You can apply to sell later.'}
       </p>
       <div className="auth-tabs">
         <button className={mode === 'login' ? 'active' : ''} onClick={() => setMode('login')}>Sign in</button>
@@ -144,7 +129,7 @@ function ProductVisual({ product, className = '' }) {
   return (
     <div className={`product-visual ${className}`} style={!image?.url ? { background: placeholderColors[(product.id || 0) % placeholderColors.length] } : undefined}>
       {image?.url ? <img src={image.url} alt={image.altText || product.name} /> : (
-        <div className="visual-placeholder"><span>{product.brand || 'Mercato'}</span><Package size={44} strokeWidth={1.2} /></div>
+        <div className="visual-placeholder"><span>{product.brand || 'Shoping'}</span><Package size={44} strokeWidth={1.2} /></div>
       )}
     </div>
   )
@@ -301,7 +286,7 @@ function ShopPage({ session, onAuth, notify, setCartCount, setWishCount }) {
   )
 }
 
-function CartPage({ notify, setCartCount, goShop }) {
+function CartPage({ notify, setCartCount, goShop, goCheckout }) {
   const [cart, setCart] = useState(null)
   const [products, setProducts] = useState({})
   const [loading, setLoading] = useState(true)
@@ -344,7 +329,7 @@ function CartPage({ notify, setCartCount, goShop }) {
               const product = products[item.productId] || { id: item.productId, name: `Product #${item.productId}`, price: item.price }
               return <article className="line-item" key={item.productId}>
                 <ProductVisual product={product} />
-                <div className="line-copy"><span>{product.brand || 'Mercato seller'}</span><h3>{product.name}</h3><strong>{money(item.price)}</strong></div>
+                <div className="line-copy"><span>{product.brand || 'Shoping seller'}</span><h3>{product.name}</h3><strong>{money(item.price)}</strong></div>
                 <label className="quantity">Qty<input type="number" min="1" value={item.quantity} onChange={(e) => update(item.productId, Number(e.target.value))} /></label>
                 <strong className="subtotal">{money(item.subtotal)}</strong>
                 <button className="icon-button danger" onClick={() => remove(item.productId)} aria-label="Remove item"><Trash2 size={18} /></button>
@@ -356,13 +341,109 @@ function CartPage({ notify, setCartCount, goShop }) {
             <div><span>Items</span><span>{items.length}</span></div>
             <div><span>Delivery</span><span>Calculated later</span></div>
             <hr /><div><b>Total</b><b>{money(cart.totalAmount)}</b></div>
-            <button className="button primary full" disabled>Checkout coming soon</button>
+            <button className="button primary full" onClick={goCheckout}>Proceed to checkout</button>
             <p><ShieldCheck size={16} />Cart prices are verified against live product data.</p>
           </aside>
         </div>
       )}
     </main>
   )
+}
+
+function CheckoutPage({ notify, setCartCount, goCart, goOrders }) {
+  const [cart, setCart] = useState(null)
+  const [products, setProducts] = useState({})
+  const [shippingAddress, setShippingAddress] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('CARD')
+  const [cardNumber, setCardNumber] = useState('4111111111111111')
+  const [loading, setLoading] = useState(true)
+  const [placing, setPlacing] = useState(false)
+
+  useEffect(() => {
+    cartApi.get().then(async (result) => {
+      setCart(result)
+      const pairs = await Promise.all((result.items || []).map(async (item) => {
+        try { return [item.productId, await productApi.get(item.productId)] } catch { return [item.productId, null] }
+      }))
+      setProducts(Object.fromEntries(pairs))
+    }).catch((error) => notify(error.message, 'error')).finally(() => setLoading(false))
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const submit = async (event) => {
+    event.preventDefault(); setPlacing(true)
+    try {
+      const order = await orderApi.create({
+        shippingAddress,
+        items: cart.items.map((item) => ({ productId: item.productId, quantity: item.quantity })),
+      })
+      const payment = await paymentApi.pay({ orderId: order.id, paymentMethod, cardNumber: paymentMethod === 'CARD' ? cardNumber : '' })
+      if (payment.status === 'SUCCESS') {
+        await cartApi.clear(); setCartCount(0); notify(`Payment successful · ${payment.paymentReference}`); goOrders()
+      } else {
+        notify(payment.failureReason || 'Dummy payment was declined', 'error'); goOrders()
+      }
+    } catch (error) { notify(error.message, 'error') } finally { setPlacing(false) }
+  }
+
+  if (loading) return <main className="shell page"><Loading label="Preparing checkout" /></main>
+  const items = cart?.items || []
+  if (!items.length) return <main className="shell page"><Empty icon={ShoppingCart} title="Your cart is empty" text="Add a product before checking out." action={<button className="button primary" onClick={goCart}>Return to cart</button>} /></main>
+  return <main className="shell page">
+    <div className="page-title"><div><p className="eyebrow">Secure checkout</p><h1>Delivery & payment</h1></div><span className="admin-lock"><ShieldCheck size={17} />Dummy payment</span></div>
+    <form className="checkout-layout" onSubmit={submit}>
+      <section className="panel checkout-form">
+        <div className="checkout-step"><span>1</span><div><h2>Delivery address</h2><p>Where should this order be delivered?</p></div></div>
+        <label>Full delivery address<textarea rows="4" maxLength="500" required value={shippingAddress} onChange={(e) => setShippingAddress(e.target.value)} placeholder="House number, street, city, state and PIN code" /></label>
+        <div className="checkout-step"><span>2</span><div><h2>Payment method</h2><p>This is a simulation and never charges real money.</p></div></div>
+        <div className="payment-options">
+          <button type="button" className={paymentMethod === 'CARD' ? 'active' : ''} onClick={() => setPaymentMethod('CARD')}><CreditCard size={20} /><b>Dummy card</b><small>Instant test payment</small></button>
+          <button type="button" className={paymentMethod === 'UPI' ? 'active' : ''} onClick={() => setPaymentMethod('UPI')}><Sparkles size={20} /><b>Dummy UPI</b><small>Always succeeds</small></button>
+        </div>
+        {paymentMethod === 'CARD' && <label>Dummy card number<input required inputMode="numeric" pattern="[0-9 ]{12,23}" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} /><small>Use 4111111111111111 for success; a number ending in 0000 is declined.</small></label>}
+      </section>
+      <aside className="order-summary checkout-summary">
+        <p className="eyebrow">Review order</p>
+        {items.map((item) => <div className="checkout-item" key={item.productId}><span>{products[item.productId]?.name || `Product #${item.productId}`} × {item.quantity}</span><b>{money(item.subtotal)}</b></div>)}
+        <hr /><div><b>Total</b><b>{money(cart.totalAmount)}</b></div>
+        <button className="button primary full" disabled={placing}>{placing ? 'Processing…' : `Pay ${money(cart.totalAmount)}`}</button>
+        <button type="button" className="text-button" onClick={goCart}>Back to cart</button>
+      </aside>
+    </form>
+  </main>
+}
+
+function OrdersPage({ notify }) {
+  const [orders, setOrders] = useState([])
+  const [payments, setPayments] = useState([])
+  const [loading, setLoading] = useState(true)
+  const load = async () => {
+    setLoading(true)
+    const [orderResult, paymentResult] = await Promise.allSettled([orderApi.mine(), paymentApi.mine()])
+    if (orderResult.status === 'fulfilled') setOrders(orderResult.value || [])
+    else notify(orderResult.reason.message, 'error')
+    if (paymentResult.status === 'fulfilled') setPayments(paymentResult.value || [])
+    setLoading(false)
+  }
+  useEffect(() => { load() }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  const cancel = async (order) => {
+    if (!window.confirm(`Cancel order #${order.id}?`)) return
+    try { await orderApi.cancel(order.id); await load(); notify('Order cancelled') } catch (error) { notify(error.message, 'error') }
+  }
+  if (loading) return <main className="shell page"><Loading label="Loading your orders" /></main>
+  return <main className="shell page">
+    <div className="page-title"><div><p className="eyebrow">Purchase history</p><h1>Your orders</h1></div><span>{orders.length} orders</span></div>
+    {!orders.length ? <Empty icon={ReceiptText} title="No orders yet" text="Completed checkouts will appear here." /> : <div className="order-list">
+      {orders.map((order) => {
+        const payment = payments.find((item) => item.orderId === order.id)
+        return <article className="panel order-card" key={order.id}>
+          <div className="order-card-head"><div><small>Order #{order.id}</small><h2>{money(order.totalAmount)}</h2><span>{new Date(order.createdAt).toLocaleString()}</span></div><StatusPill value={order.orderStatus} /></div>
+          <div className="order-items">{(order.items || []).map((item) => <div key={item.id}><span>{item.productName} × {item.quantity}</span><b>{money(item.subtotal)}</b></div>)}</div>
+          <div className="order-meta"><span><Truck size={16} />{order.shippingAddress}</span>{payment && <span><CreditCard size={16} />{payment.paymentReference} · {titleCase(payment.status)}</span>}</div>
+          {['PENDING_PAYMENT', 'PAYMENT_FAILED'].includes(order.orderStatus) && <button className="text-button danger" onClick={() => cancel(order)}>Cancel order</button>}
+        </article>
+      })}
+    </div>}
+  </main>
 }
 
 function WishlistPage({ notify, setWishCount, setCartCount, goShop }) {
@@ -459,7 +540,7 @@ function ProfilePage({ session, setSession, notify }) {
         </form> : <div className="details-list"><div><span>Full name</span><b>{profile.fullName}</b></div><div><span>Email</span><b>{profile.email}</b></div><div><span>Phone</span><b>{profile.phone}</b></div><div><span>Gender</span><b>{profile.gender || 'Not provided'}</b></div><button className="text-button danger" onClick={deleteProfile}>Delete customer profile</button></div>}
       </section>
       <section className="panel account-section seller-application">
-        <div className="panel-head"><div><p className="eyebrow">Sell on Mercato</p><h2>{seller ? seller.shopName : 'Open your shop'}</h2></div>{seller && <StatusPill value={seller.approvalStatus} />}</div>
+        <div className="panel-head"><div><p className="eyebrow">Sell on Shoping</p><h2>{seller ? seller.shopName : 'Open your shop'}</h2></div>{seller && <StatusPill value={seller.approvalStatus} />}</div>
         {seller ? <>
           <p>{seller.shopDescription || 'Your seller application is being managed by the marketplace team.'}</p>
           <div className="seller-steps"><span className="done">1<small>Applied</small></span><i /><span className={seller.approvalStatus === 'APPROVED' ? 'done' : ''}>2<small>Approved</small></span><i /><span className={session.role === 'SELLER' ? 'done' : ''}>3<small>Seller access</small></span></div>
@@ -478,16 +559,25 @@ function ProfilePage({ session, setSession, notify }) {
 }
 
 function ProductForm({ product, subcategories, onClose, onSaved, notify }) {
+  const existingImage = product?.images?.find((item) => item.primaryImage) || product?.images?.[0]
   const [form, setForm] = useState({
     name: product?.name || '', description: product?.description || '', sku: product?.sku || '',
     brand: product?.brand || '', price: product?.price || '', subCategoryId: product?.subCategoryId || '',
+    imageUrl: existingImage?.url || '',
   })
   const [saving, setSaving] = useState(false)
   const submit = async (event) => {
     event.preventDefault(); setSaving(true)
     try {
-      const payload = { ...form, price: Number(form.price), subCategoryId: Number(form.subCategoryId) }
-      const value = product ? await productApi.update(product.id, payload) : await productApi.create(payload)
+      const { imageUrl, ...productFields } = form
+      const payload = { ...productFields, price: Number(form.price), subCategoryId: Number(form.subCategoryId) }
+      let value = product ? await productApi.update(product.id, payload) : await productApi.create(payload)
+      if (imageUrl.trim()) {
+        const imagePayload = { url: imageUrl.trim(), altText: form.name, primaryImage: true, displayOrder: 0 }
+        if (existingImage) await productApi.images.update(value.id, existingImage.id, imagePayload)
+        else await productApi.images.add(value.id, [imagePayload])
+        value = await productApi.get(value.id)
+      }
       notify(product ? 'Product updated' : 'Product created')
       onSaved(value); onClose()
     } catch (error) { notify(error.message, 'error') } finally { setSaving(false) }
@@ -500,6 +590,8 @@ function ProductForm({ product, subcategories, onClose, onSaved, notify }) {
       <label>Price (₹)<input required type="number" min="1" step="0.01" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} /></label>
       <label className="span-two">Subcategory<select required value={form.subCategoryId} onChange={(e) => setForm({ ...form, subCategoryId: e.target.value })}><option value="">Select subcategory</option>{subcategories.map((item) => <option value={item.id} key={item.id}>{item.categoryName} · {item.name}</option>)}</select></label>
       <label className="span-two">Description<textarea maxLength="2000" rows="4" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></label>
+      <label className="span-two">Primary image URL<input type="url" maxLength="500" value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} placeholder="https://example.com/product-image.jpg" /><small>Paste a public HTTPS image URL. It will be displayed on product cards and checkout.</small></label>
+      {form.imageUrl && <div className="span-two image-preview"><img src={form.imageUrl} alt="Product preview" onError={(event) => { event.currentTarget.style.display = 'none' }} /><span>Image preview</span></div>}
       <div className="form-actions"><button className="button primary" disabled={saving}>{saving ? 'Saving…' : 'Save product'}</button><button type="button" className="button secondary" onClick={onClose}>Cancel</button></div>
     </form>
   </Modal>
@@ -657,7 +749,11 @@ function AdminPage({ notify }) {
       notify(`Seller application ${titleCase(next)}`)
     } catch (error) { notify(error.message, 'error') }
   }
-  const tabs = [['overview', LayoutDashboard, 'Overview'], ['users', Users, 'Users'], ['sellers', Store, 'Sellers'], ['catalog', Package, 'Catalog'], ['categories', Box, 'Categories']]
+  const updateOrderStatus = async (order, next) => {
+    try { await orderApi.updateStatus(order.id, next); await load(); notify(`Order #${order.id} marked ${titleCase(next)}`) }
+    catch (error) { notify(error.message, 'error') }
+  }
+  const tabs = [['overview', LayoutDashboard, 'Overview'], ['users', Users, 'Users'], ['sellers', Store, 'Sellers'], ['orders', ReceiptText, 'Orders'], ['catalog', Package, 'Catalog'], ['categories', Box, 'Categories']]
   if (loading) return <main className="shell page"><Loading label="Loading admin control room" /></main>
   return <main className="shell page admin-page">
     <div className="page-title"><div><p className="eyebrow">Protected administration</p><h1>Marketplace control room</h1></div><span className="admin-lock"><ShieldCheck size={17} />Admin only</span></div>
@@ -666,7 +762,7 @@ function AdminPage({ notify }) {
       <div className="metric-grid">
         <div><span><Users /></span><p>Total users</p><b>{dashboard.totalUsers ?? users.length}</b><small>Registered accounts</small></div>
         <div><span><Package /></span><p>Total products</p><b>{dashboard.totalProducts ?? products.length}</b><small>Across the marketplace</small></div>
-        <div><span><ShoppingBag /></span><p>Total orders</p><b>{dashboard.totalOrders ?? orders.length}</b><small>Order service not yet connected</small></div>
+        <div><span><ShoppingBag /></span><p>Total orders</p><b>{dashboard.totalOrders ?? orders.length}</b><small>Live order service</small></div>
         <div><span><ShieldCheck /></span><p>Pending disputes</p><b>{dashboard.pendingDisputes ?? 0}</b><small>Awaiting review</small></div>
       </div>
       <div className="admin-two-col">
@@ -676,6 +772,7 @@ function AdminPage({ notify }) {
     </>}
     {tab === 'users' && <section className="panel table-panel"><div className="panel-head"><div><p className="eyebrow">Identity & access</p><h2>Users</h2></div><span>{users.length} accounts</span></div><div className="table-wrap"><table><thead><tr><th>User</th><th>Role</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead><tbody>{users.map((user) => <tr key={user.id}><td><b>{user.name}</b><small className="block">{user.email}</small></td><td><select className="table-select" value={user.role} onChange={(e) => role(user, e.target.value)}><option>CUSTOMER</option><option>SELLER</option><option>ADMIN</option></select></td><td><StatusPill value={user.active ? 'ACTIVE' : 'BANNED'} /></td><td>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : '—'}</td><td><button className={`button small ${user.active ? 'danger-outline' : 'secondary'}`} onClick={() => setActive(user)}>{user.active ? 'Ban' : 'Restore'}</button></td></tr>)}</tbody></table></div></section>}
     {tab === 'sellers' && <section className="panel table-panel"><div className="panel-head"><div><p className="eyebrow">Trust & approvals</p><h2>Seller applications</h2></div></div><div className="table-wrap"><table><thead><tr><th>Shop</th><th>Owner</th><th>Type</th><th>Status</th><th>Decision</th></tr></thead><tbody>{sellers.map((seller) => <tr key={seller.sellerId}><td><b>{seller.shopName}</b><small className="block">{seller.gstNumber || 'No GST number'}</small></td><td>User #{seller.userId}</td><td>{titleCase(seller.sellerType)}</td><td><StatusPill value={seller.approvalStatus} /></td><td><select className="table-select" value={seller.approvalStatus} onChange={(e) => status(seller, e.target.value)}><option>PENDING</option><option>APPROVED</option><option>REJECTED</option><option>SUSPENDED</option></select></td></tr>)}</tbody></table></div></section>}
+    {tab === 'orders' && <section className="panel table-panel"><div className="panel-head"><div><p className="eyebrow">Fulfilment</p><h2>All orders</h2></div><span>{orders.length} orders</span></div>{!orders.length ? <Empty icon={ReceiptText} title="No orders yet" text="Customer checkouts will appear here." /> : <div className="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th><th>Fulfilment</th></tr></thead><tbody>{orders.map((order) => <tr key={order.id}><td><b>#{order.id}</b></td><td>User #{order.userId}</td><td>{money(order.totalAmount)}</td><td><StatusPill value={order.orderStatus} /></td><td><select className="table-select" value={order.orderStatus} onChange={(e) => updateOrderStatus(order, e.target.value)}><option>PENDING_PAYMENT</option><option>PAID</option><option>PAYMENT_FAILED</option><option>PROCESSING</option><option>SHIPPED</option><option>DELIVERED</option><option>CANCELLED</option></select></td></tr>)}</tbody></table></div>}</section>}
     {tab === 'catalog' && <section className="panel table-panel"><div className="panel-head"><div><p className="eyebrow">Catalog oversight</p><h2>All products</h2></div></div><div className="table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Status</th></tr></thead><tbody>{products.map((product) => <tr key={product.id}><td><b>{product.name}</b><small className="block">{product.description}</small></td><td>{product.category || '—'}</td><td>{money(product.price)}</td><td><StatusPill value={product.status || 'ACTIVE'} /></td></tr>)}</tbody></table></div></section>}
     {tab === 'categories' && <CategoryManager notify={notify} />}
   </main>
@@ -685,11 +782,11 @@ function Header({ session, setSession, page, setPage, onAuth, cartCount, wishCou
   const [menu, setMenu] = useState(false)
   const logout = () => { saveSession(null); setSession(null); setPage('shop'); notify('Signed out safely') }
   const nav = [{ key: 'shop', label: 'Shop', roles: null }]
-  if (session) nav.push({ key: 'wishlist', label: 'Wishlist', roles: null }, { key: 'cart', label: 'Cart', roles: null }, { key: 'account', label: 'Account', roles: null })
+  if (session) nav.push({ key: 'wishlist', label: 'Wishlist', roles: null }, { key: 'cart', label: 'Cart', roles: null }, { key: 'orders', label: 'Orders', roles: null }, { key: 'account', label: 'Account', roles: null })
   if (session?.role === 'SELLER') nav.push({ key: 'seller', label: 'Seller studio', roles: ['SELLER'] })
   if (session?.role === 'ADMIN') nav.push({ key: 'admin', label: 'Admin', roles: ['ADMIN'] })
   return <header className="site-header"><div className="shell header-inner">
-    <button className="brand" onClick={() => setPage('shop')} aria-label="Mercato home"><span>M</span><b>mercato</b></button>
+    <button className="brand" onClick={() => setPage('shop')} aria-label="Shoping home"><span>M</span><b>Shoping</b></button>
     <nav className={`main-nav ${menu ? 'open' : ''}`}>{nav.map((item) => <button key={item.key} className={page === item.key ? 'active' : ''} onClick={() => { setPage(item.key); setMenu(false) }}>{item.label}{item.key === 'cart' && cartCount > 0 && <small>{cartCount}</small>}{item.key === 'wishlist' && wishCount > 0 && <small>{wishCount}</small>}</button>)}</nav>
     <div className="header-actions">
       {session ? <div className="user-menu"><button className="user-chip" onClick={() => setPage('account')}><span>{session.name?.[0] || 'U'}</span><div><small>{titleCase(session.role)}</small><b>{session.name?.split(' ')[0]}</b></div></button><button className="icon-button" onClick={logout} title="Sign out"><LogOut size={18} /></button></div> : <button className="button dark small" onClick={onAuth}><CircleUserRound size={17} />Sign in</button>}
@@ -706,22 +803,16 @@ function RoleGuard({ session, allowed, onAuth, children }) {
 
 export default function App() {
   const [session, setSession] = useState(getSession)
-  const [page, setPage] = useHashPage()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [authOpen, setAuthOpen] = useState(false)
   const [toast, setToast] = useState(null)
   const [cartCount, setCartCount] = useState(0)
   const [wishCount, setWishCount] = useState(0)
   const notify = (message, type = 'success') => setToast({ message, type, id: Date.now() })
-  const allowedPages = useMemo(() => {
-    if (!session) return ['shop']
-    const base = ['shop', 'cart', 'wishlist', 'account']
-    if (session.role === 'SELLER') base.push('seller')
-    if (session.role === 'ADMIN') base.push('admin')
-    return base
-  }, [session])
-  useEffect(() => {
-    if (!allowedPages.includes(page)) setPage('shop')
-  }, [session]) // eslint-disable-line react-hooks/exhaustive-deps
+  const paths = { shop: '/', cart: '/cart', checkout: '/checkout', wishlist: '/wishlist', orders: '/orders', account: '/account', seller: '/seller', admin: '/admin' }
+  const page = Object.entries(paths).find(([, path]) => path === location.pathname)?.[0] || 'shop'
+  const setPage = (next) => { navigate(paths[next] || '/'); window.scrollTo({ top: 0, behavior: 'smooth' }) }
   useEffect(() => {
     if (!session) { setCartCount(0); setWishCount(0); return }
     Promise.allSettled([cartApi.get(), wishlistApi.get()]).then(([cart, wish]) => {
@@ -731,13 +822,18 @@ export default function App() {
   }, [session])
   return <>
     <Header session={session} setSession={setSession} page={page} setPage={setPage} onAuth={() => setAuthOpen(true)} cartCount={cartCount} wishCount={wishCount} notify={notify} />
-    {page === 'shop' && <ShopPage session={session} onAuth={() => setAuthOpen(true)} notify={notify} setCartCount={setCartCount} setWishCount={setWishCount} />}
-    {page === 'cart' && <RoleGuard session={session} onAuth={() => setAuthOpen(true)}><CartPage notify={notify} setCartCount={setCartCount} goShop={() => setPage('shop')} /></RoleGuard>}
-    {page === 'wishlist' && <RoleGuard session={session} onAuth={() => setAuthOpen(true)}><WishlistPage notify={notify} setWishCount={setWishCount} setCartCount={setCartCount} goShop={() => setPage('shop')} /></RoleGuard>}
-    {page === 'account' && <RoleGuard session={session} onAuth={() => setAuthOpen(true)}><ProfilePage session={session} setSession={setSession} notify={notify} /></RoleGuard>}
-    {page === 'seller' && <RoleGuard session={session} allowed={['SELLER']} onAuth={() => setAuthOpen(true)}><SellerPage session={session} notify={notify} /></RoleGuard>}
-    {page === 'admin' && <RoleGuard session={session} allowed={['ADMIN']} onAuth={() => setAuthOpen(true)}><AdminPage notify={notify} /></RoleGuard>}
-    <footer><div className="shell footer-inner"><div><button className="brand light" onClick={() => setPage('shop')}><span>M</span><b>mercato</b></button><p>Good things, found here.</p></div><div><b>Marketplace</b><button onClick={() => setPage('shop')}>All products</button><button onClick={() => session ? setPage('account') : setAuthOpen(true)}>Your account</button></div><div><b>Trust</b><span>Role-aware access</span><span>Verified inventory</span></div><small>© 2026 Mercato</small></div></footer>
+    <Routes>
+      <Route path="/" element={<ShopPage session={session} onAuth={() => setAuthOpen(true)} notify={notify} setCartCount={setCartCount} setWishCount={setWishCount} />} />
+      <Route path="/cart" element={<RoleGuard session={session} onAuth={() => setAuthOpen(true)}><CartPage notify={notify} setCartCount={setCartCount} goShop={() => setPage('shop')} goCheckout={() => setPage('checkout')} /></RoleGuard>} />
+      <Route path="/checkout" element={<RoleGuard session={session} onAuth={() => setAuthOpen(true)}><CheckoutPage notify={notify} setCartCount={setCartCount} goCart={() => setPage('cart')} goOrders={() => setPage('orders')} /></RoleGuard>} />
+      <Route path="/wishlist" element={<RoleGuard session={session} onAuth={() => setAuthOpen(true)}><WishlistPage notify={notify} setWishCount={setWishCount} setCartCount={setCartCount} goShop={() => setPage('shop')} /></RoleGuard>} />
+      <Route path="/orders" element={<RoleGuard session={session} onAuth={() => setAuthOpen(true)}><OrdersPage notify={notify} /></RoleGuard>} />
+      <Route path="/account" element={<RoleGuard session={session} onAuth={() => setAuthOpen(true)}><ProfilePage session={session} setSession={setSession} notify={notify} /></RoleGuard>} />
+      <Route path="/seller" element={<RoleGuard session={session} allowed={['SELLER']} onAuth={() => setAuthOpen(true)}><SellerPage session={session} notify={notify} /></RoleGuard>} />
+      <Route path="/admin" element={<RoleGuard session={session} allowed={['ADMIN']} onAuth={() => setAuthOpen(true)}><AdminPage notify={notify} /></RoleGuard>} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+    <footer><div className="shell footer-inner"><div><button className="brand light" onClick={() => setPage('shop')}><span>M</span><b>Shoping</b></button><p>Good things, found here.</p></div><div><b>Marketplace</b><button onClick={() => setPage('shop')}>All products</button><button onClick={() => session ? setPage('account') : setAuthOpen(true)}>Your account</button></div><div><b>Trust</b><span>Role-aware access</span><span>Verified inventory</span></div><small>© 2026 Shoping</small></div></footer>
     <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} onAuthenticated={setSession} notify={notify} />
     <Toast toast={toast} clear={() => setToast(null)} />
   </>

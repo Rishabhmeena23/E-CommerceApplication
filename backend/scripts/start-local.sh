@@ -139,6 +139,8 @@ for port_and_name in \
   "8085 Product Service" \
   "8086 Cart Service" \
   "8087 Wishlist Service" \
+  "8088 Order Service" \
+  "8089 Payment Service" \
   "8080 API Gateway"; do
   port="${port_and_name%% *}"
   name="${port_and_name#* }"
@@ -194,6 +196,14 @@ start_jar "wishlist" \
   "$BACKEND_DIR/services/wishlist-service/target/wishlist-service-0.0.1-SNAPSHOT.jar"
 wishlist_pid="$LAST_PID"
 
+start_jar "order" \
+  "$BACKEND_DIR/services/order-service/target/order-service-0.0.1-SNAPSHOT.jar"
+order_pid="$LAST_PID"
+
+start_jar "payment" \
+  "$BACKEND_DIR/services/payment-service/target/payment-service-0.0.1-SNAPSHOT.jar"
+payment_pid="$LAST_PID"
+
 wait_for_port "Auth Service" 8081 "$auth_pid"
 wait_for_port "Admin Service" 8082 "$admin_pid"
 wait_for_port "Customer Service" 8083 "$customer_pid"
@@ -201,6 +211,8 @@ wait_for_port "Seller Service" 8084 "$seller_pid"
 wait_for_port "Product Service" 8085 "$product_pid"
 wait_for_port "Cart Service" 8086 "$cart_pid"
 wait_for_port "Wishlist Service" 8087 "$wishlist_pid"
+wait_for_port "Order Service" 8088 "$order_pid"
+wait_for_port "Payment Service" 8089 "$payment_pid"
 
 # The Gateway takes its initial load-balancer snapshot at startup. Waiting for
 # every business service to register avoids a temporary wave of 503 responses.
@@ -211,7 +223,9 @@ for app_name in \
   SELLER-SERVICE \
   PRODUCT-SERVICE \
   CART-SERVICE \
-  WISHLIST-SERVICE; do
+  WISHLIST-SERVICE \
+  ORDER-SERVICE \
+  PAYMENT-SERVICE; do
   wait_for_eureka "$app_name"
 done
 

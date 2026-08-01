@@ -6,6 +6,12 @@ services:
     url: http://localhost:8081
   product:
     url: http://localhost:8085
+  order:
+    url: http://localhost:8088
+
+internal:
+  service:
+    key: ${INTERNAL_SERVICE_KEY:change-me-in-production}
 
 eureka:
   instance:

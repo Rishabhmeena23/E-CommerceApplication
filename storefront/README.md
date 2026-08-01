@@ -51,12 +51,15 @@ npm run preview
 | Browse and search the catalog | Yes | Yes | Yes | Yes |
 | Manage customer profile | — | Own | Own | Own |
 | Manage cart and wishlist | — | Own | Own | Own |
+| Checkout and view orders | — | Own | Own | Own/all |
+| Run dummy payments | — | Own | Own | Own/all |
 | Apply to sell | — | Yes | — | — |
 | Create and manage owned products | — | — | Yes | Yes |
 | Manage inventory and images | — | — | Owned products | Yes |
 | Approve sellers | — | — | — | Yes |
 | Manage users and roles | — | — | — | Yes |
 | Manage categories | — | — | — | Yes |
+| Update fulfilment status | — | — | — | Yes |
 
 Registration always requests the `CUSTOMER` role. A customer becomes a seller
 only after an administrator approves the seller application and assigns the
@@ -70,5 +73,11 @@ services remain responsible for authorization and resource ownership.
 
 - `src/api/client.js` — authentication-aware HTTP client and error handling
 - `src/api/services.js` — functions for all gateway-exposed backend APIs
-- `src/App.jsx` — public, customer, seller, and administrator experiences
+- `src/App.jsx` — routed public, checkout, order, seller, and administrator experiences
 - `src/styles.css` — responsive visual system
+
+## Checkout and dummy payment
+
+The cart can create an order and complete a simulated payment. Use card number
+`4111111111111111` for success or any number ending in `0000` to test a decline.
+No real card information is sent to a payment provider or stored.

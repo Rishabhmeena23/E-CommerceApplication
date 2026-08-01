@@ -9,7 +9,7 @@ Set one strong shared `JWT_SECRET` (at least 32 bytes) and a non-default
 `INTERNAL_SERVICE_KEY` before starting any service. The Config Server database
 configuration now also requires `AUTH_DB_PASSWORD`, `CUSTOMER_DB_PASSWORD`,
 `CART_DB_PASSWORD`, `WISHLIST_DB_PASSWORD`, `SELLER_DB_PASSWORD`, and
-`PRODUCT_DB_PASSWORD`.
+`PRODUCT_DB_PASSWORD`, `ORDER_DB_PASSWORD`, and `PAYMENT_DB_PASSWORD`.
 
 For local development, copy `scripts/local-env.example` to `.local-env`, set
 the values, and run `source .local-env` in the terminal before starting the
@@ -29,6 +29,9 @@ variables in your IDE’s run configuration if you start services from the IDE.
    assign the `SELLER` role through the Admin user-role endpoint.
 5. Product writes require SELLER or ADMIN. Sellers can only change products
    whose `sellerUserId` equals the JWT user ID. Catalog reads are public.
+6. Checkout creates a price-verified order with `POST /orders`, then simulates
+   payment with `POST /payments`. Customers use `/orders/me` and `/payments/me`
+   for their own history; administrators can list and fulfil all orders.
 
 ## Security controls added
 
@@ -39,10 +42,10 @@ variables in your IDE’s run configuration if you start services from the IDE.
 - Direct service requests no longer bypass authentication.
 - Product prices and available stock are verified by Cart Service before an item
   is added or its quantity is changed.
-- Gateway routing now includes `/subcategories/**`; CORS includes `PATCH`.
-- Admin products are read from Product Service. There is still no Order Service
-  in this backend, so Admin order responses intentionally return an empty list
-  rather than made-up orders.
+- Gateway routing includes catalog, order, and payment endpoints; CORS supports
+  both local frontend origins and all required HTTP methods.
+- Admin products and orders are read from their real services. Internal calls
+  use `X-Internal-Service-Key` and are not exposed through the Gateway.
 
 ## Database migration note
 

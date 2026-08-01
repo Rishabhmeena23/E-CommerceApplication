@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: order-service
+  config:
+    import: configserver:http://localhost:8888
+
+jwt:
+  secret: ${JWT_SECRET:change-me-in-production-please-use-a-32+char-secret!}
+
+services:
+  auth:
+    url: ${AUTH_SERVICE_URL:http://localhost:8081}
+  product:
+    url: ${PRODUCT_SERVICE_URL:http://localhost:8085}
+
+internal:
+  service:
+    key: ${INTERNAL_SERVICE_KEY:change-me-in-production}

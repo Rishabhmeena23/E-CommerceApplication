@@ -103,6 +103,17 @@ public class SecurityConfig {
                         // User Management APIs
                         .requestMatchers(path("/users/**")).hasRole("ADMIN")
 
+                        // Orders and payments are private. Collection reads and
+                        // order fulfilment controls belong to administrators.
+                        .requestMatchers(path(org.springframework.http.HttpMethod.GET, "/orders"))
+                        .hasRole("ADMIN")
+                        .requestMatchers(path(org.springframework.http.HttpMethod.PATCH, "/orders/*/status"))
+                        .hasRole("ADMIN")
+                        .requestMatchers(path(org.springframework.http.HttpMethod.GET, "/payments"))
+                        .hasRole("ADMIN")
+                        .requestMatchers(path("/orders/**"), path("/payments/**"))
+                        .hasAnyRole("CUSTOMER", "SELLER", "ADMIN")
+
                         // Everything else requires authentication
                         .anyRequest().authenticated()
                 )
@@ -132,7 +143,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                List.of("http://localhost:5173"));
+                List.of("http://localhost:5173", "http://127.0.0.1:5173"));
 
         configuration.setAllowedMethods(
                 List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));

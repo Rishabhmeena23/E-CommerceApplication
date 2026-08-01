@@ -1,6 +1,7 @@
 package com.ecommerce.admin_service.dto;
 
 import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonAlias;
 
 public class OrderDto {
 
@@ -10,6 +11,7 @@ public class OrderDto {
 
     private BigDecimal totalAmount;
 
+    @JsonAlias("status")
     private String orderStatus;
 
     public OrderDto() {

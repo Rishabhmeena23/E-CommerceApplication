@@ -98,6 +98,22 @@ export const wishlistApi = {
   clear: () => request('/wishlist', { method: 'DELETE' }),
 }
 
+export const orderApi = {
+  create: (payload) => request('/orders', { method: 'POST', body: payload }),
+  mine: () => request('/orders/me'),
+  list: () => request('/orders'),
+  get: (id) => request(`/orders/${id}`),
+  cancel: (id) => request(`/orders/${id}/cancel`, { method: 'PATCH' }),
+  updateStatus: (id, status) => request(`/orders/${id}/status`, { method: 'PATCH', body: { status } }),
+}
+
+export const paymentApi = {
+  pay: (payload) => request('/payments', { method: 'POST', body: payload }),
+  mine: () => request('/payments/me'),
+  list: () => request('/payments'),
+  get: (id) => request(`/payments/${id}`),
+}
+
 export const adminApi = {
   health: () => request('/admin/health'),
   dashboard: () => request('/admin/dashboard'),
