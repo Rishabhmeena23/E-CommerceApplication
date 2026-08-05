@@ -46,7 +46,7 @@ export default function App() {
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
     <footer><div className="shell footer-inner">
-      <div><button className="brand light" onClick={() => setPage('shop')}><span>M</span><b>Shopping</b></button><p>Good things, found here.</p></div>
+      <div><button className="brand light" onClick={() => setPage('shop')}><span>S</span><b>Shopping</b></button><p>Good things, found here.</p></div>
       <div><b>Marketplace</b><button onClick={() => setPage('shop')}>All products</button><button onClick={() => session ? setPage('account') : openAuth()}>Your account</button></div>
       <div><b>Trust</b><span>Role-aware access</span><span>Verified inventory</span></div><small>© 2026 Shopping</small>
     </div></footer>

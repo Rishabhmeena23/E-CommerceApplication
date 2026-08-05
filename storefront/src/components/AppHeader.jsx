@@ -17,7 +17,7 @@ export function Header({ session, setSession, page, setPage, onAuth, cartCount, 
   if (session?.role === 'SELLER') nav.push({ key: 'seller', label: 'Seller studio', roles: ['SELLER'] })
   if (session?.role === 'ADMIN') nav.push({ key: 'admin', label: 'Admin', roles: ['ADMIN'] })
   return <header className="site-header"><div className="shell header-inner">
-    <button className="brand" onClick={() => setPage('shop')} aria-label="Shopping home"><span>M</span><b>Shopping</b></button>
+    <button className="brand" onClick={() => setPage('shop')} aria-label="Shopping home"><span>S</span><b>Shopping</b></button>
     <nav className={`main-nav ${menu ? 'open' : ''}`}>{nav.map((item) => <button key={item.key} className={page === item.key ? 'active' : ''} onClick={() => { setPage(item.key); setMenu(false) }}>{item.label}{item.key === 'cart' && cartCount > 0 && <small>{cartCount}</small>}{item.key === 'wishlist' && wishCount > 0 && <small>{wishCount}</small>}</button>)}</nav>
     <div className="header-actions">
       {session ? <div className="user-menu"><button className="user-chip" onClick={() => setPage('account')}><span>{session.name?.[0] || 'U'}</span><div><small>{titleCase(session.role)}</small><b>{session.name?.split(' ')[0]}</b></div></button><button className="icon-button" onClick={logout} title="Sign out"><LogOut size={18} /></button></div> : <button className="button dark small" onClick={onAuth}><CircleUserRound size={17} />Sign in</button>}
