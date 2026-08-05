@@ -42,6 +42,14 @@ public class SecurityConfig {
                 // Authorization Rules
                 .authorizeHttpRequests(auth -> auth
 
+                        // OpenAPI documentation and the central Swagger UI.
+                        .requestMatchers(
+                                path("/swagger-ui.html"),
+                                path("/swagger-ui/**"),
+                                path("/v3/api-docs/**"),
+                                path("/openapi/**"))
+                        .permitAll()
+
                         // Public APIs
                         .requestMatchers(path("/auth/**")).permitAll()
                         .requestMatchers(path("/error")).permitAll()

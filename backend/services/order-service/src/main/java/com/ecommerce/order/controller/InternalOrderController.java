@@ -10,7 +10,9 @@ import com.ecommerce.order.dto.PaymentUpdateRequest;
 import com.ecommerce.order.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.Hidden;
 
+@Hidden
 @RestController @RequestMapping("/internal/orders") @RequiredArgsConstructor
 public class InternalOrderController {
     private final OrderService orders;

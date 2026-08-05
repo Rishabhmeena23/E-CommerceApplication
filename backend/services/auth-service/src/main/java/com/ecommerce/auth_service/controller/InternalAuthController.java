@@ -14,7 +14,10 @@ import com.ecommerce.auth_service.dto.TokenStateResponse;
 import com.ecommerce.auth_service.entity.User;
 import com.ecommerce.auth_service.repository.UserRepository;
 
+import io.swagger.v3.oas.annotations.Hidden;
+
 /** Internal-only token-state lookup used by gateway and downstream services. */
+@Hidden
 @RestController
 @RequestMapping("/internal/auth")
 public class InternalAuthController {

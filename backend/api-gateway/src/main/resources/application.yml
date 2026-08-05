@@ -14,6 +14,70 @@ spring:
         webmvc:
           routes:
 
+            # OpenAPI specifications used by the central Swagger UI
+            - id: auth-service-openapi
+              uri: lb://AUTH-SERVICE
+              predicates:
+                - Path=/openapi/auth
+              filters:
+                - SetPath=/v3/api-docs
+
+            - id: admin-service-openapi
+              uri: lb://ADMIN-SERVICE
+              predicates:
+                - Path=/openapi/admin
+              filters:
+                - SetPath=/v3/api-docs
+
+            - id: customer-service-openapi
+              uri: lb://CUSTOMER-SERVICE
+              predicates:
+                - Path=/openapi/customer
+              filters:
+                - SetPath=/v3/api-docs
+
+            - id: seller-service-openapi
+              uri: lb://SELLER-SERVICE
+              predicates:
+                - Path=/openapi/seller
+              filters:
+                - SetPath=/v3/api-docs
+
+            - id: product-service-openapi
+              uri: lb://PRODUCT-SERVICE
+              predicates:
+                - Path=/openapi/product
+              filters:
+                - SetPath=/v3/api-docs
+
+            - id: cart-service-openapi
+              uri: lb://CART-SERVICE
+              predicates:
+                - Path=/openapi/cart
+              filters:
+                - SetPath=/v3/api-docs
+
+            - id: wishlist-service-openapi
+              uri: lb://WISHLIST-SERVICE
+              predicates:
+                - Path=/openapi/wishlist
+              filters:
+                - SetPath=/v3/api-docs
+
+            - id: order-service-openapi
+              uri: lb://ORDER-SERVICE
+              predicates:
+                - Path=/openapi/order
+              filters:
+                - SetPath=/v3/api-docs
+
+            - id: payment-service-openapi
+              uri: lb://PAYMENT-SERVICE
+              predicates:
+                - Path=/openapi/payment
+              filters:
+                - SetPath=/v3/api-docs
+
             # Auth Service
             - id: auth-service-auth
               uri: lb://AUTH-SERVICE
@@ -102,3 +166,28 @@ services:
 internal:
   service:
     key: ${INTERNAL_SERVICE_KEY:change-me-in-production}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    persist-authorization: true
+    urls:
+      - name: Auth Service
+        url: /openapi/auth
+      - name: Admin Service
+        url: /openapi/admin
+      - name: Customer Service
+        url: /openapi/customer
+      - name: Seller Service
+        url: /openapi/seller
+      - name: Product Service
+        url: /openapi/product
+      - name: Cart Service
+        url: /openapi/cart
+      - name: Wishlist Service
+        url: /openapi/wishlist
+      - name: Order Service
+        url: /openapi/order
+      - name: Payment Service
+        url: /openapi/payment

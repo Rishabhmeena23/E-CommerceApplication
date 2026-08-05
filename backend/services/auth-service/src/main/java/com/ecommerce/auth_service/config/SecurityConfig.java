@@ -41,6 +41,12 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+
                         // Registration and login must remain public
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()

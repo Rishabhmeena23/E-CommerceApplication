@@ -20,6 +20,7 @@ public class SecurityConfig {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/customers/me/**")
                         .hasAnyRole("CUSTOMER", "SELLER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/customers")
