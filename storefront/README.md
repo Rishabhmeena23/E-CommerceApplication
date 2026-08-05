@@ -73,8 +73,13 @@ services remain responsible for authorization and resource ownership.
 
 - `src/api/client.js` — authentication-aware HTTP client and error handling
 - `src/api/services.js` — functions for all gateway-exposed backend APIs
-- `src/App.jsx` — routed public, checkout, order, seller, and administrator experiences
+- `src/components/` — reusable interface pieces such as dialogs, product cards, and navigation
+- `src/pages/` — customer, seller, administrator, and public screens grouped by audience
+- `src/utils/` — small formatting helpers shared across screens
+- `src/App.jsx` — routes and application-wide state only
 - `src/styles.css` — responsive visual system
+
+Start with [DEVELOPMENT.md](./DEVELOPMENT.md) for a guided tour of the frontend and a step-by-step example of how a user action reaches the backend.
 
 ## Checkout and dummy payment
 
